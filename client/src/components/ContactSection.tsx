@@ -3,6 +3,13 @@ export default function ContactSection() {
     window.open("https://maps.google.com/?q=8.8932,76.7794", "_blank");
   };
 
+  const scrollToMap = () => {
+    const mapSection = document.querySelector('[data-testid="map-section"]');
+    if (mapSection) {
+      mapSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   return (
     <section id="contact" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
@@ -28,10 +35,17 @@ export default function ContactSection() {
                   <i className="fas fa-home text-primary text-xl mt-1"></i>
                   <div>
                     <h5 className="font-semibold mb-1">Address</h5>
-                    <p className="text-muted-foreground">
+                    <button 
+                      onClick={scrollToMap}
+                      className="text-left text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                      data-testid="address-click-to-map"
+                    >
                       Heaven of Munroe<br />
                       Munroe Island, Kollam District<br />
                       Kerala 691502, India
+                    </button>
+                    <p className="text-xs text-muted-foreground/60 mt-1">
+                      <i className="fas fa-mouse-pointer mr-1"></i>Click to view on map
                     </p>
                   </div>
                 </div>
@@ -113,7 +127,10 @@ export default function ContactSection() {
           </div>
           
           <div>
-            <div className="bg-card rounded-2xl overflow-hidden shadow-lg h-[600px] flex items-center justify-center relative">
+            <div 
+              className="bg-card rounded-2xl overflow-hidden shadow-lg h-[600px] flex items-center justify-center relative"
+              data-testid="map-section"
+            >
               <img 
                 src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                 alt="Aerial view of Munroe Island location" 
