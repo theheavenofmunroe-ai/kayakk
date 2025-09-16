@@ -106,9 +106,16 @@ export default function PhotoGallery() {
 
   // Handle opening lightbox
   const openLightbox = (imageIndex: number) => {
-    const allImages = showAllImages ? filteredImages : filteredImages.slice(0, 6);
-    setLightboxImages(allImages);
-    setCurrentImageIndex(imageIndex);
+    // Always use all filtered images for navigation (not just displayed subset)
+    setLightboxImages(filteredImages);
+    
+    // Find the clicked image from the displayed subset
+    const clickedImage = imagesToShow[imageIndex];
+    // Find its index in the full filtered set
+    const fullSetIndex = filteredImages.findIndex(img => img.id === clickedImage.id);
+    
+    // Defensive fallback if image not found (should not happen but safety first)
+    setCurrentImageIndex(fullSetIndex !== -1 ? fullSetIndex : imageIndex);
     setLightboxOpen(true);
   };
 
