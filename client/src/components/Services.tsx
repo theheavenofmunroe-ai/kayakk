@@ -10,11 +10,11 @@ export default function Services() {
   const services = [
     {
       id: "canal-boating",
-      title: "Canal Boating",
-      description: "Navigate through pristine canals and discover hidden lagoons. Perfect for all skill levels with professional guides.",
+      title: "Canal Boating Adventure",
+      description: "Experience the enchanting network of narrow canals and waterways of Munroe Island. Navigate through pristine mangrove forests, discover hidden lagoons, and witness diverse bird species in their natural habitat. Our traditional country boats provide an authentic Kerala backwater experience with knowledgeable local guides sharing fascinating stories about the region's rich history and culture. Perfect for all ages and skill levels - a peaceful journey through nature's paradise.",
       price: "₹500/hour",
       icon: "fas fa-water",
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Canal Boating service",
+      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Canal Boating Adventure service",
       image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     },
     {

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Images, ChevronUp, X } from "lucide-react";
+import { Images, ChevronUp } from "lucide-react";
 import type { GalleryImage } from "@shared/schema";
 
 export default function PhotoGallery() {
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [showAllImages, setShowAllImages] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
@@ -91,15 +89,6 @@ export default function PhotoGallery() {
 
   const displayImages = galleryImages.length > 0 ? galleryImages : defaultImages;
 
-  const openLightbox = (image: GalleryImage) => {
-    setSelectedImage(image);
-    setLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-    setSelectedImage(null);
-  };
 
   // Get unique categories for filtering
   const categories = ["all", ...Array.from(new Set(displayImages.map(img => img.category || "general")))];
@@ -169,21 +158,14 @@ export default function PhotoGallery() {
             {imagesToShow.map((image, index) => (
               <div 
                 key={image.id}
-                className="aspect-square rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 cursor-pointer group relative"
-                onClick={() => openLightbox(image)}
+                className="aspect-square rounded-xl overflow-hidden shadow-lg transition-all duration-300"
                 data-testid={`gallery-image-${image.id}`}
               >
                 <img 
                   src={image.imageUrl} 
                   alt={image.altText} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover"
                 />
-                {/* View Details Overlay */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-white font-medium text-sm bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
-                    View Details
-                  </span>
-                </div>
               </div>
             ))}
           </div>
@@ -213,58 +195,6 @@ export default function PhotoGallery() {
         </div>
       </div>
 
-      {/* Lightbox with Details Popup */}
-      {lightboxOpen && selectedImage && (
-        <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={closeLightbox}
-          data-testid="lightbox-overlay"
-        >
-          <div 
-            className="relative max-w-5xl max-h-full bg-white rounded-xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Image Section */}
-            <div className="relative">
-              <img 
-                src={selectedImage.imageUrl} 
-                alt={selectedImage.altText} 
-                className="w-full max-h-[70vh] object-contain"
-              />
-              <button 
-                className="absolute top-4 right-4 bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
-                onClick={closeLightbox}
-                data-testid="button-close-lightbox"
-                aria-label="Close gallery image"
-              >
-                <X size={20} />
-              </button>
-            </div>
-            
-            {/* Details Section */}
-            <div className="p-6 bg-white text-gray-800">
-              <h3 className="text-2xl font-bold mb-2" data-testid={`lightbox-title-${selectedImage.id}`}>
-                {selectedImage.title}
-              </h3>
-              {selectedImage.description && (
-                <p className="text-gray-600 mb-4" data-testid={`lightbox-description-${selectedImage.id}`}>
-                  {selectedImage.description}
-                </p>
-              )}
-              <div className="flex flex-wrap gap-2">
-                {selectedImage.category && (
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                    {selectedImage.category.charAt(0).toUpperCase() + selectedImage.category.slice(1)}
-                  </span>
-                )}
-                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
-                  Click outside to close
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
