@@ -1,4 +1,8 @@
+import { useLocation } from "wouter";
+
 export default function Hero() {
+  const [, setLocation] = useLocation();
+  
   const scrollToServices = () => {
     const element = document.getElementById("services");
     if (element) {
@@ -6,8 +10,8 @@ export default function Hero() {
     }
   };
 
-  const openWhatsApp = () => {
-    window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I'm interested in booking Heaven of Munroe services", "_blank");
+  const openInquiryForm = () => {
+    setLocation("/inquiry");
   };
 
   return (
@@ -43,11 +47,11 @@ export default function Hero() {
             Discover More
           </button>
           <button 
-            onClick={openWhatsApp}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-2xl hover:-translate-y-2 active:scale-95 min-w-[200px] hover-lift"
-            data-testid="button-book-whatsapp"
+            onClick={openInquiryForm}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-2xl hover:-translate-y-2 active:scale-95 min-w-[200px] hover-lift"
+            data-testid="button-book-inquiry"
           >
-            <i className="fab fa-whatsapp mr-2 animate-bounce-gentle"></i>
+            <i className="fas fa-calendar-plus mr-2 animate-bounce-gentle"></i>
             Book Now
           </button>
         </div>

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useLocation } from "wouter";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [, setLocation] = useLocation();
   const isMobile = useIsMobile();
 
   const scrollToSection = (sectionId: string) => {
@@ -13,8 +15,8 @@ export default function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  const openWhatsApp = () => {
-    window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Heaven of Munroe services", "_blank");
+  const openInquiryForm = () => {
+    setLocation("/inquiry");
   };
 
   return (
@@ -35,11 +37,11 @@ export default function Header() {
             
             <div className="flex items-center space-x-3">
               <button 
-                onClick={openWhatsApp}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 font-medium text-sm"
-                data-testid="button-whatsapp-header"
+                onClick={openInquiryForm}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 font-medium text-sm"
+                data-testid="button-inquiry-header"
               >
-                <i className="fab fa-whatsapp mr-1"></i>
+                <i className="fas fa-calendar-plus mr-1"></i>
                 Book Now
               </button>
               {isMobile && (
@@ -81,12 +83,12 @@ export default function Header() {
               
               <nav className="space-y-4">
                 <button
-                  onClick={openWhatsApp}
-                  className="block w-full text-left px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all font-medium"
-                  data-testid="mobile-nav-whatsapp"
+                  onClick={openInquiryForm}
+                  className="block w-full text-left px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all font-medium"
+                  data-testid="mobile-nav-inquiry"
                 >
-                  <i className="fab fa-whatsapp mr-3"></i>
-                  Book on WhatsApp
+                  <i className="fas fa-calendar-plus mr-3"></i>
+                  Make Inquiry
                 </button>
               </nav>
             </div>
