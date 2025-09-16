@@ -1,51 +1,116 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Images, ChevronUp, X } from "lucide-react";
+import type { GalleryImage } from "@shared/schema";
 
 export default function PhotoGallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [showAllImages, setShowAllImages] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  const galleryImages = [
+  const { data: galleryImages = [], isLoading, isError } = useQuery<GalleryImage[]>({
+    queryKey: ['/api/gallery-images'],
+  });
+
+  // If no images in database, show default images as fallback
+  const defaultImages = [
     {
-      src: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      alt: "Canal boating experience",
-      fullSrc: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      id: "default-1",
+      title: "Canal boating experience",
+      description: "Peaceful canal boating through Kerala backwaters",
+      imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      altText: "Canal boating experience",
+      category: "boating",
+      sortOrder: 1,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
-      src: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      alt: "Mini house boat shikkar boat",
-      fullSrc: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      id: "default-2", 
+      title: "Mini house boat shikkar boat",
+      description: "Traditional shikkar boats for authentic backwater experience",
+      imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      altText: "Mini house boat shikkar boat",
+      category: "boating",
+      sortOrder: 2,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
-      src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      alt: "Home stay rooms",
-      fullSrc: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      id: "default-3",
+      title: "Home stay rooms",
+      description: "Comfortable homestay accommodation with local hospitality",
+      imageUrl: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      altText: "Home stay rooms",
+      category: "homestay",
+      sortOrder: 3,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
-      src: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      alt: "Lake foods",
-      fullSrc: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      id: "default-4",
+      title: "Lake foods",
+      description: "Delicious local Kerala cuisine and fresh lake specialties",
+      imageUrl: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      altText: "Lake foods",
+      category: "food",
+      sortOrder: 4,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
-      src: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      alt: "Munroe Island boating",
-      fullSrc: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      id: "default-5",
+      title: "Munroe Island boating",
+      description: "Scenic boating around pristine Munroe Island",
+      imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      altText: "Munroe Island boating",
+      category: "boating",
+      sortOrder: 5,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
-      src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
-      alt: "Backwater experience",
-      fullSrc: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+      id: "default-6",
+      title: "Backwater experience",
+      description: "Immerse yourself in the tranquil backwater ecosystem",
+      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+      altText: "Backwater experience",
+      category: "boating",
+      sortOrder: 6,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }
-  ];
+  ] as GalleryImage[];
 
-  const openLightbox = (imageSrc: string) => {
-    setSelectedImage(imageSrc);
+  const displayImages = galleryImages.length > 0 ? galleryImages : defaultImages;
+
+  const openLightbox = (image: GalleryImage) => {
+    setSelectedImage(image);
     setLightboxOpen(true);
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-    setSelectedImage("");
+    setSelectedImage(null);
   };
+
+  // Get unique categories for filtering
+  const categories = ["all", ...Array.from(new Set(displayImages.map(img => img.category || "general")))];
+
+  // Filter images by category
+  const filteredImages = selectedCategory === "all" 
+    ? displayImages 
+    : displayImages.filter(img => img.category === selectedCategory);
+
+  // Show limited images initially, or all if "View All" is clicked
+  const imagesToShow = showAllImages ? filteredImages : filteredImages.slice(0, 6);
 
   return (
     <section id="gallery" className="py-16 bg-white">
@@ -59,54 +124,144 @@ export default function PhotoGallery() {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {galleryImages.map((image, index) => (
-            <div 
-              key={index}
-              className="aspect-square rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 cursor-pointer group"
-              onClick={() => openLightbox(image.fullSrc)}
-              data-testid={`gallery-image-${index}`}
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => {
+                setSelectedCategory(category);
+                setShowAllImages(false); // Reset view all state when changing category
+              }}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                selectedCategory === category
+                  ? "bg-blue-600 text-white shadow-lg"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+              data-testid={`category-filter-${category}`}
             >
-              <img 
-                src={image.src} 
-                alt={image.alt} 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-            </div>
+              {category === "all" ? "All" : category.charAt(0).toUpperCase() + category.slice(1)}
+            </button>
           ))}
         </div>
+
+        {/* Error State */}
+        {isError && (
+          <div className="text-center py-8">
+            <p className="text-orange-600 bg-orange-50 px-4 py-2 rounded-lg inline-block">
+              Unable to load gallery from database. Showing default images.
+            </p>
+          </div>
+        )}
+
+        {/* Loading State */}
+        {isLoading ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={index}
+                className="aspect-square bg-gray-200 rounded-xl animate-pulse"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {imagesToShow.map((image, index) => (
+              <div 
+                key={image.id}
+                className="aspect-square rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 cursor-pointer group relative"
+                onClick={() => openLightbox(image)}
+                data-testid={`gallery-image-${image.id}`}
+              >
+                <img 
+                  src={image.imageUrl} 
+                  alt={image.altText} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                {/* View Details Overlay */}
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white font-medium text-sm bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+                    View Details
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
         
         <div className="text-center mt-12">
-          <button 
-            onClick={() => window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I'd like to see more photos of Heaven of Munroe", '_blank')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            data-testid="button-view-full-gallery"
-          >
-            <i className="fas fa-images mr-2"></i>
-            View All Gallery
-          </button>
+          {!showAllImages && filteredImages.length > 6 && (
+            <button 
+              onClick={() => setShowAllImages(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center gap-2"
+              data-testid="button-view-all-gallery"
+            >
+              <Images size={20} />
+              View All Gallery ({filteredImages.length} photos)
+            </button>
+          )}
+          {showAllImages && (
+            <button 
+              onClick={() => setShowAllImages(false)}
+              className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center gap-2"
+              data-testid="button-show-less-gallery"
+            >
+              <ChevronUp size={20} />
+              Show Less
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Lightbox */}
-      {lightboxOpen && (
+      {/* Lightbox with Details Popup */}
+      {lightboxOpen && selectedImage && (
         <div 
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
           onClick={closeLightbox}
+          data-testid="lightbox-overlay"
         >
-          <div className="relative max-w-4xl max-h-full">
-            <img 
-              src={selectedImage} 
-              alt="Gallery image" 
-              className="max-w-full max-h-full object-contain"
-            />
-            <button 
-              className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 transition-colors"
-              onClick={closeLightbox}
-              data-testid="button-close-lightbox"
-            >
-              <i className="fas fa-times"></i>
-            </button>
+          <div 
+            className="relative max-w-5xl max-h-full bg-white rounded-xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Image Section */}
+            <div className="relative">
+              <img 
+                src={selectedImage.imageUrl} 
+                alt={selectedImage.altText} 
+                className="w-full max-h-[70vh] object-contain"
+              />
+              <button 
+                className="absolute top-4 right-4 bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/70 transition-colors"
+                onClick={closeLightbox}
+                data-testid="button-close-lightbox"
+                aria-label="Close gallery image"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            {/* Details Section */}
+            <div className="p-6 bg-white text-gray-800">
+              <h3 className="text-2xl font-bold mb-2" data-testid={`lightbox-title-${selectedImage.id}`}>
+                {selectedImage.title}
+              </h3>
+              {selectedImage.description && (
+                <p className="text-gray-600 mb-4" data-testid={`lightbox-description-${selectedImage.id}`}>
+                  {selectedImage.description}
+                </p>
+              )}
+              <div className="flex flex-wrap gap-2">
+                {selectedImage.category && (
+                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {selectedImage.category.charAt(0).toUpperCase() + selectedImage.category.slice(1)}
+                  </span>
+                )}
+                <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                  Click outside to close
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       )}
