@@ -22,47 +22,47 @@ export default function Hero() {
       
       <div className="relative z-10 container mx-auto px-4 text-center text-white">
         <div className="animate-fade-in-up">
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
+          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight gradient-text">
             Heaven of Munroe
           </h1>
-          <p className="text-lg md:text-xl mb-2 font-medium">
+          <p className="text-lg md:text-xl mb-2 font-medium animate-slide-in-left delay-200">
             Room Stay & Food Boating Service
           </p>
-          <p className="text-base md:text-lg mb-8 opacity-90">
+          <p className="text-base md:text-lg mb-8 opacity-90 animate-slide-in-right delay-300">
             Boating in Munroe Island
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up delay-300">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-zoom-in delay-400">
           <button 
             onClick={scrollToServices}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl active:scale-95 min-w-[200px]"
+            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-2xl hover:-translate-y-2 active:scale-95 min-w-[200px] animate-pulse-slow"
             data-testid="button-discover-services"
           >
-            <i className="fas fa-compass mr-2"></i>
+            <i className="fas fa-compass mr-2 animate-rotate-slow"></i>
             Discover More
           </button>
           <button 
             onClick={openWhatsApp}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl active:scale-95 min-w-[200px]"
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-2xl hover:-translate-y-2 active:scale-95 min-w-[200px] hover-lift"
             data-testid="button-book-whatsapp"
           >
-            <i className="fab fa-whatsapp mr-2"></i>
+            <i className="fab fa-whatsapp mr-2 animate-bounce-gentle"></i>
             Book Now
           </button>
         </div>
         
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto animate-fade-in-up delay-500">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
-            <i className="fas fa-star text-yellow-400 text-2xl mb-2"></i>
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
+          <div className="glass-effect rounded-lg p-4 hover:bg-white/20 transition-all duration-500 transform hover-lift animate-fade-in-up delay-500">
+            <i className="fas fa-star text-yellow-400 text-2xl mb-2 animate-float"></i>
             <p className="text-sm font-medium">Trusted Partner</p>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
-            <i className="fas fa-water text-blue-400 text-2xl mb-2"></i>
+          <div className="glass-effect rounded-lg p-4 hover:bg-white/20 transition-all duration-500 transform hover-lift animate-fade-in-up delay-600">
+            <i className="fas fa-water text-blue-400 text-2xl mb-2 animate-float"></i>
             <p className="text-sm font-medium">Best Boating Experience</p>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 hover:bg-white/20 transition-all duration-300">
-            <i className="fas fa-home text-green-400 text-2xl mb-2"></i>
+          <div className="glass-effect rounded-lg p-4 hover:bg-white/20 transition-all duration-500 transform hover-lift animate-fade-in-up delay-700">
+            <i className="fas fa-home text-green-400 text-2xl mb-2 animate-float"></i>
             <p className="text-sm font-medium">Comfortable Stay</p>
           </div>
         </div>

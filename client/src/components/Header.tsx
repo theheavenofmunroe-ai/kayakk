@@ -32,31 +32,6 @@ export default function Header() {
               </div>
             </div>
             
-            {!isMobile && (
-              <nav className="flex items-center space-x-6">
-                <button 
-                  onClick={() => scrollToSection("services")} 
-                  className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-                  data-testid="nav-services"
-                >
-                  Services
-                </button>
-                <button 
-                  onClick={() => scrollToSection("gallery")} 
-                  className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-                  data-testid="nav-gallery"
-                >
-                  Gallery
-                </button>
-                <button 
-                  onClick={() => scrollToSection("contact")} 
-                  className="text-gray-700 hover:text-blue-600 transition-colors font-medium"
-                  data-testid="nav-contact"
-                >
-                  Contact
-                </button>
-              </nav>
-            )}
             
             <div className="flex items-center space-x-3">
               <button 
@@ -105,30 +80,6 @@ export default function Header() {
               </div>
               
               <nav className="space-y-4">
-                <button
-                  onClick={() => scrollToSection("services")}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all font-medium"
-                  data-testid="mobile-nav-services"
-                >
-                  <i className="fas fa-ship mr-3"></i>
-                  Services
-                </button>
-                <button
-                  onClick={() => scrollToSection("gallery")}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all font-medium"
-                  data-testid="mobile-nav-gallery"
-                >
-                  <i className="fas fa-images mr-3"></i>
-                  Gallery
-                </button>
-                <button
-                  onClick={() => scrollToSection("contact")}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all font-medium"
-                  data-testid="mobile-nav-contact"
-                >
-                  <i className="fas fa-map-marker-alt mr-3"></i>
-                  Contact
-                </button>
                 <button
                   onClick={openWhatsApp}
                   className="block w-full text-left px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all font-medium"

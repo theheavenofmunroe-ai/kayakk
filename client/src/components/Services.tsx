@@ -54,7 +54,7 @@ export default function Services() {
           {services.map((service, index) => (
             <div 
               key={service.id} 
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 animate-fade-in-up group"
+              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 transform hover-lift animate-fade-in-up group animate-zoom-in"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               <div className="relative overflow-hidden">
@@ -84,10 +84,10 @@ export default function Services() {
                   </div>
                   <button 
                     onClick={() => window.open(service.whatsapp, '_blank')}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg active:scale-95"
+                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:-translate-y-1 active:scale-95 animate-pulse-slow"
                     data-testid={`button-book-${service.id}`}
                   >
-                    <i className="fab fa-whatsapp mr-2"></i>
+                    <i className="fab fa-whatsapp mr-2 animate-bounce-gentle"></i>
                     Book Now
                   </button>
                 </div>
