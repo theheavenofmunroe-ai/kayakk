@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -71,6 +71,17 @@ export default function InquiryForm({ selectedPackage, onClose, onSuccess }: Inq
       specialRequests: "",
     },
   });
+
+  // Auto-focus the first field for better user experience
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const firstInput = document.querySelector('[data-testid="input-full-name"]') as HTMLInputElement;
+      if (firstInput) {
+        firstInput.focus();
+      }
+    }, 500);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const createInquiry = useMutation({
     mutationFn: async (data: InquiryFormData) => {
@@ -183,8 +194,8 @@ export default function InquiryForm({ selectedPackage, onClose, onSuccess }: Inq
   }
 
   return (
-    <Card className="w-full max-w-2xl mx-auto animate-fade-in-up">
-      <CardHeader>
+    <Card className="w-full max-w-2xl mx-auto animate-fade-in-up shadow-xl border-0 bg-white">
+      <CardHeader className="bg-gradient-to-r from-blue-50 to-green-50 rounded-t-lg">
         <CardTitle className="text-2xl font-serif text-center text-blue-600">
           <i className="fas fa-ship mr-2"></i>
           Book Your Experience

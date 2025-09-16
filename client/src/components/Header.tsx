@@ -5,7 +5,7 @@ export default function Header() {
 
 
   const openInquiryForm = () => {
-    setLocation("/inquiry");
+    setLocation("/inquiry#booking-form");
   };
 
   const navigateToHome = () => {
