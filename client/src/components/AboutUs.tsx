@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Users, MapPin, Award, Heart, Clock, Anchor, Globe, Star } from "lucide-react";
-import type { AboutContent } from "@shared/schema";
+import type { AboutContent, ContentSection } from "@shared/schema";
 
 export default function AboutUs() {
   const [activeTab, setActiveTab] = useState<'story' | 'location' | 'team' | 'mission'>('story');
@@ -10,6 +10,19 @@ export default function AboutUs() {
   const { data: aboutContent, isLoading } = useQuery<AboutContent | null>({
     queryKey: ['/api/about-content'],
     retry: 1
+  });
+  
+  // Fetch additional content sections for comprehensive about us
+  const { data: storyContent } = useQuery<ContentSection | null>({
+    queryKey: ['/api/content-sections', 'about-story'],
+  });
+  
+  const { data: locationContent } = useQuery<ContentSection | null>({
+    queryKey: ['/api/content-sections', 'about-location'],
+  });
+  
+  const { data: missionContent } = useQuery<ContentSection | null>({
+    queryKey: ['/api/content-sections', 'about-mission'],
   });
 
   const renderTabContent = () => {
@@ -21,16 +34,7 @@ export default function AboutUs() {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Heaven of Munroe began as a vision to share the untouched beauty of Munroe Island 
-                  with the world while preserving its pristine natural environment and cultural heritage. 
-                  Founded by local families who have called these waters home for generations, our business 
-                  represents a perfect blend of traditional Kerala hospitality and sustainable tourism practices.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Our journey started when we realized that Munroe Island's incredible biodiversity, 
-                  peaceful backwaters, and authentic village life were hidden gems that deserved to be 
-                  experienced responsibly. We committed ourselves to creating meaningful connections between 
-                  travelers and our local community.
+                  {storyContent?.content || "Heaven of Munroe began as a vision to share the untouched beauty of Munroe Island with the world while preserving its pristine natural environment and cultural heritage. Founded by local families who have called these waters home for generations, our business represents a perfect blend of traditional Kerala hospitality and sustainable tourism practices."}
                 </p>
               </div>
               <div className="space-y-4">
@@ -66,16 +70,7 @@ export default function AboutUs() {
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-4">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Nestled in the heart of Kerala's Kollam district, Munroe Island is a collection of 
-                  eight small islands where the Kallada River gracefully meets Ashtamudi Lake. This 
-                  unique geographical position creates an extraordinary ecosystem that supports diverse 
-                  wildlife, traditional fishing communities, and centuries-old cultural practices.
-                </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Our location offers the perfect escape from urban chaos. Here, time moves differently—
-                  synchronized with the gentle rhythm of tides, the morning calls of kingfishers, and 
-                  the evening glow reflecting off tranquil waters. The narrow canals, lined with swaying 
-                  coconut palms and traditional homes, create a maze of natural beauty waiting to be explored.
+                  {locationContent?.content || "Nestled in the heart of Kerala's Kollam district, Munroe Island is a collection of eight small islands where the Kallada River gracefully meets Ashtamudi Lake. This unique geographical position creates an extraordinary ecosystem that supports diverse wildlife, traditional fishing communities, and centuries-old cultural practices. Our location offers the perfect escape from urban chaos. Here, time moves differently—synchronized with the gentle rhythm of tides, the morning calls of kingfishers, and the evening glow reflecting off tranquil waters."}
                 </p>
                 <div className="bg-white p-6 rounded-xl shadow-lg border">
                   <h4 className="font-semibold text-lg mb-4 flex items-center">
@@ -200,8 +195,7 @@ export default function AboutUs() {
                     Our Mission
                   </h4>
                   <p className="leading-relaxed">
-                    To create authentic, sustainable connections between travelers and the natural beauty 
-                    of Munroe Island while preserving our cultural heritage and supporting local communities.
+                    {missionContent?.content || "To create authentic, sustainable connections between travelers and the natural beauty of Munroe Island while preserving our cultural heritage and supporting local communities."}
                   </p>
                 </div>
                 
@@ -291,7 +285,7 @@ export default function AboutUs() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50" data-testid="section-about-us">
+    <section id="about-us" className="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50" data-testid="section-about-us">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6" data-testid="heading-about-us">

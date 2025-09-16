@@ -16,11 +16,11 @@ export default function Home() {
       <Header />
       <Hero />
       <MunroeIslandDescription />
-      <AboutUs />
       <Services />
       <BoatingPackages />
       <Testimonials />
       <PhotoGallery />
+      <AboutUs />
       <ContactSection />
       <Footer />
       <BottomNavigation />

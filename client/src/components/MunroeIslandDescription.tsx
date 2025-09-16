@@ -1,17 +1,32 @@
 import { Leaf, Home, Ship, CheckCircle, Droplet } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import type { ContentSection } from "@shared/schema";
 
 export default function MunroeIslandDescription() {
+  // Fetch content sections from database
+  const { data: mainContent } = useQuery<ContentSection | null>({
+    queryKey: ['/api/content-sections', 'munroe-island-main'],
+  });
+  
+  const { data: featuresContent } = useQuery<ContentSection | null>({
+    queryKey: ['/api/content-sections', 'munroe-island-features'],
+  });
+
+  // Use database content with fallbacks
+  const title = mainContent?.title || "Discover Munroe Island";
+  const subtitle = mainContent?.content || "A cluster of eight pristine islands where the Kallada River meets Ashtamudi Lake — Kerala's hidden gem";
+  const heroImage = mainContent?.imageUrl || "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
   return (
     <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-teal-50" data-testid="section-munroe-description">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6" data-testid="heading-munroe-discover">
-              Discover Munroe Island
+              {title}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-teal-600 mx-auto mb-8"></div>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              A cluster of eight pristine islands where the Kallada River meets Ashtamudi Lake — Kerala's hidden gem
+              {subtitle}
             </p>
           </div>
           
@@ -33,7 +48,7 @@ export default function MunroeIslandDescription() {
             </div>
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                src={heroImage}
                 alt="Aerial view of Munroe Island's intricate waterways"
                 className="rounded-2xl shadow-2xl w-full h-[400px] object-cover"
                 loading="lazy"

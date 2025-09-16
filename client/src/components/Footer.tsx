@@ -9,6 +9,7 @@ export default function Footer() {
   const essentialLinks = [
     { label: "Services", href: "#services" },
     { label: "Gallery", href: "#gallery" },
+    { label: "About Us", href: "#about-us" },
     { label: "Contact", href: "#contact" }
   ];
 
