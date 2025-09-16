@@ -14,83 +14,110 @@ export default function PhotoGallery() {
     queryKey: ['/api/gallery-images'],
   });
 
-  // If no images in database, show default images as fallback
-  const defaultImages = [
-    {
-      id: "default-1",
-      title: "Canal boating experience",
-      description: "Peaceful canal boating through Kerala backwaters",
-      imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-      altText: "Canal boating experience",
-      category: "boating",
-      sortOrder: 1,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "default-2", 
-      title: "Mini house boat shikkar boat",
-      description: "Traditional shikkar boats for authentic backwater experience",
-      imageUrl: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-      altText: "Mini house boat shikkar boat",
-      category: "boating",
-      sortOrder: 2,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "default-3",
-      title: "Home stay rooms",
-      description: "Comfortable homestay accommodation with local hospitality",
-      imageUrl: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-      altText: "Home stay rooms",
-      category: "homestay",
-      sortOrder: 3,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "default-4",
-      title: "Lake foods",
-      description: "Delicious local Kerala cuisine and fresh lake specialties",
-      imageUrl: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-      altText: "Lake foods",
-      category: "food",
-      sortOrder: 4,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "default-5",
-      title: "Munroe Island boating",
-      description: "Scenic boating around pristine Munroe Island",
-      imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-      altText: "Munroe Island boating",
-      category: "boating",
-      sortOrder: 5,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: "default-6",
-      title: "Backwater experience",
-      description: "Immerse yourself in the tranquil backwater ecosystem",
-      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-      altText: "Backwater experience",
-      category: "boating",
-      sortOrder: 6,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
-  ] as GalleryImage[];
+  // Generate gallery images from all photos in the pics folder
+  const generateLocalImages = (): GalleryImage[] => {
+    const localImages: GalleryImage[] = [];
+    
+    // Categories and descriptions for diverse content (culture and wildlife categories removed)
+    const imageData = [
+      { category: "kayaking", title: "Traditional Kayak Adventure", description: "Gliding through serene backwaters in traditional wooden kayaks" },
+      { category: "nature", title: "Coconut Palm Reflections", description: "Towering coconut palms mirrored in crystal-clear waters" },
+      { category: "nature", title: "Kingfisher Spotting", description: "Colorful kingfishers perched along the waterways" },
+      { category: "kayaking", title: "Peaceful Morning Paddle", description: "Early morning kayaking through misty backwater channels" },
+      { category: "landscape", title: "Backwater Sunset", description: "Golden hour painting the sky over tranquil waters" },
+      { category: "landscape", title: "Local Fishing Boats", description: "Traditional fishing boats anchored in village waters" },
+      { category: "nature", title: "Mangrove Exploration", description: "Navigating through dense mangrove forests" },
+      { category: "kayaking", title: "Group Kayaking Fun", description: "Friends enjoying a guided kayaking expedition" },
+      { category: "nature", title: "Heron in Shallow Waters", description: "Graceful herons hunting in the shallow backwaters" },
+      { category: "landscape", title: "Village Waterfront", description: "Charming village homes along the water's edge" },
+      { category: "landscape", title: "Coir Making Tradition", description: "Local artisans crafting coir products from coconut fiber" },
+      { category: "nature", title: "Lotus Blooms", description: "Beautiful lotus flowers floating on calm waters" },
+      { category: "kayaking", title: "Solo Kayak Journey", description: "Peaceful solo paddling through narrow channels" },
+      { category: "nature", title: "Monitor Lizard Basking", description: "Large monitor lizards sunbathing on fallen logs" },
+      { category: "landscape", title: "Aerial Backwater View", description: "Bird's eye view of the intricate waterway network" },
+      { category: "landscape", title: "Traditional House Boat", description: "Authentic Kerala houseboats moored in backwaters" },
+      { category: "nature", title: "Bamboo Grove Passage", description: "Kayaking through tunnels of overhanging bamboo" },
+      { category: "kayaking", title: "Family Kayaking Trip", description: "Multi-generational family enjoying water adventures" },
+      { category: "nature", title: "Cormorant Fishing", description: "Cormorants diving for fish in the clear waters" },
+      { category: "landscape", title: "Monsoon Backwaters", description: "Lush green landscape during the monsoon season" },
+      { category: "landscape", title: "Spice Garden Visit", description: "Exploring aromatic spice gardens near the waterways" },
+      { category: "nature", title: "Water Hyacinth Blooms", description: "Purple water hyacinth flowers carpeting the surface" },
+      { category: "kayaking", title: "Sunset Kayak Tour", description: "Evening kayaking as the sun sets over the horizon" },
+      { category: "nature", title: "Otter Family Play", description: "Playful otters swimming alongside kayaks" },
+      { category: "landscape", title: "Narrow Channel Navigation", description: "Maneuvering through tight waterway passages" },
+      { category: "landscape", title: "Coconut Harvesting", description: "Local workers harvesting coconuts from tall palms" },
+      { category: "nature", title: "Butterfly Garden", description: "Colorful butterflies fluttering around flowering plants" },
+      { category: "kayaking", title: "Beginner's First Paddle", description: "First-time kayakers learning the basics" },
+      { category: "nature", title: "Eagle Soaring Above", description: "Majestic eagles circling over the backwater ecosystem" },
+      { category: "landscape", title: "Tidal Creek Exploration", description: "Discovering hidden tidal creeks and inlets" },
+      { category: "landscape", title: "Village Market Scene", description: "Bustling local market near the waterfront" },
+      { category: "nature", title: "Fern Covered Banks", description: "Lush ferns creating green walls along the water" },
+      { category: "kayaking", title: "Advanced Paddling Techniques", description: "Experienced kayakers demonstrating proper form" },
+      { category: "nature", title: "Turtle Sanctuary Visit", description: "Protected turtles in their natural habitat" },
+      { category: "landscape", title: "Estuary Meeting Point", description: "Where freshwater meets the Arabian Sea" },
+      { category: "landscape", title: "Traditional Fishing Nets", description: "Chinese fishing nets silhouetted against the sky" },
+      { category: "nature", title: "Medicinal Plant Garden", description: "Ayurvedic herbs growing along the waterways" },
+      { category: "kayaking", title: "Night Kayaking Adventure", description: "Moonlit paddling under starry skies" },
+      { category: "nature", title: "Migratory Bird Watching", description: "Seasonal visitors resting in the wetlands" },
+      { category: "landscape", title: "Backwater Island Hopping", description: "Exploring small islands scattered throughout" },
+      { category: "landscape", title: "Toddy Tapping Tradition", description: "Traditional palm wine collection methods" },
+      { category: "nature", title: "Monsoon Forest Trail", description: "Hiking trails through rain-soaked forests" },
+      { category: "kayaking", title: "Photography Kayak Tour", description: "Capturing perfect shots from water level" },
+      { category: "nature", title: "Mudskipper Colonies", description: "Unique fish that live both in water and on land" },
+      { category: "landscape", title: "Backwater Confluence", description: "Multiple waterways converging into larger channels" },
+      { category: "landscape", title: "Boat Building Craft", description: "Skilled craftsmen constructing traditional boats" },
+      { category: "nature", title: "Seasonal Flower Blooms", description: "Spectacular flowering trees reflecting in water" },
+      { category: "kayaking", title: "Eco-Tourism Experience", description: "Sustainable tourism practices in action" },
+      { category: "nature", title: "Prawn Farming Ponds", description: "Sustainable aquaculture in backwater regions" },
+      { category: "landscape", title: "Backwater Sunrise", description: "Dawn breaking over the peaceful waterscape" },
+      { category: "landscape", title: "Local Guide Stories", description: "Experienced guides sharing local knowledge" },
+      { category: "nature", title: "Pristine Ecosystem", description: "Untouched natural beauty of Munroe Island" },
+      { category: "kayaking", title: "Perfect Paddle Day", description: "Ideal conditions for an unforgettable kayaking experience" },
+      { category: "nature", title: "Backwater Biodiversity", description: "Rich variety of flora and fauna in harmony" },
+      { category: "landscape", title: "Munroe Island Paradise", description: "The ultimate backwater destination in Kerala" },
+      { category: "landscape", title: "Community Tourism", description: "Local communities welcoming visitors with warmth" }
+    ];
+    
+    // Sunset images data (images 36-39) - keep descriptions for these
+    const sunsetImages = {
+      36: { category: "sunsets", title: "Golden Hour Backwaters", description: "Spectacular golden sunset reflecting on calm backwater channels" },
+      37: { category: "sunsets", title: "Evening Glow Paradise", description: "Warm evening light painting the sky in vibrant orange and pink hues" },
+      38: { category: "sunsets", title: "Sunset Kayak Silhouette", description: "Kayakers silhouetted against the dramatic sunset sky" },
+      39: { category: "sunsets", title: "Twilight Serenity", description: "Peaceful twilight moments as day transitions to night" }
+    };
 
-  const displayImages = galleryImages.length > 0 ? galleryImages : defaultImages;
+    // Generate 55 unique images with diverse content (skip deleted image 16)
+    for (let i = 1; i <= 55; i++) {
+      // Skip image 16 as it has been permanently deleted
+      if (i === 16) continue;
+      
+      const data = imageData[i - 1] || imageData[i % imageData.length];
+      
+      // Check if this is a sunset image (36-39) to keep description
+      const isSunsetImage = sunsetImages[i as keyof typeof sunsetImages];
+      const imageData_final = isSunsetImage || data;
+      
+      localImages.push({
+        id: `local-${i}`,
+        title: "",
+        description: "",
+        imageUrl: `/images/1 (${i}).jpg`,
+        altText: "",
+        category: imageData_final.category,
+        sortOrder: i,
+        isActive: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+    }
+    
+    return localImages;
+  };
+
+  const defaultImages = generateLocalImages();
+
+  // Combine database images with local images
+  const displayImages = [...galleryImages, ...defaultImages];
 
 
   // Get unique categories for filtering
@@ -299,20 +326,14 @@ export default function PhotoGallery() {
               data-testid="lightbox-image"
             />
 
-            {/* Image Info */}
-            <div className="absolute bottom-4 left-4 right-4 text-center text-white bg-black bg-opacity-50 p-4 rounded-lg">
-              <h3 className="text-lg font-semibold mb-2">
-                {lightboxImages[currentImageIndex]?.title}
-              </h3>
-              <p className="text-sm opacity-90">
-                {lightboxImages[currentImageIndex]?.description}
-              </p>
-              {lightboxImages.length > 1 && (
-                <p className="text-xs mt-2 opacity-75">
+            {/* Image Counter Only */}
+            {lightboxImages.length > 1 && (
+              <div className="absolute bottom-4 left-4 right-4 text-center text-white bg-black bg-opacity-50 p-2 rounded-lg">
+                <p className="text-xs opacity-75">
                   {currentImageIndex + 1} of {lightboxImages.length}
                 </p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -1,0 +1,31 @@
+<svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" rx="24" fill="#2563eb"/>
+  <g transform="translate(32, 32)">
+    <!-- Water waves -->
+    <path d="M16 80 Q32 72 48 80 T80 80 Q96 72 112 80 T144 80" stroke="#60a5fa" stroke-width="3" fill="none"/>
+    <path d="M16 88 Q32 80 48 88 T80 88 Q96 80 112 88 T144 88" stroke="#93c5fd" stroke-width="2" fill="none"/>
+    <path d="M16 96 Q32 88 48 96 T80 96 Q96 88 112 96 T144 96" stroke="#bfdbfe" stroke-width="2" fill="none"/>
+    
+    <!-- Kayak -->
+    <ellipse cx="80" cy="64" rx="40" ry="8" fill="#dc2626" transform="rotate(-15 80 64)"/>
+    <ellipse cx="80" cy="64" rx="35" ry="6" fill="#ef4444" transform="rotate(-15 80 64)"/>
+    
+    <!-- Paddle -->
+    <rect x="100" y="48" width="24" height="4" rx="2" fill="#92400e" transform="rotate(-30 112 50)"/>
+    <ellipse cx="118" cy="44" rx="6" ry="12" fill="#92400e" transform="rotate(-30 118 44)"/>
+    
+    <!-- Palm trees -->
+    <rect x="24" y="32" width="4" height="32" fill="#92400e"/>
+    <path d="M26 32 Q20 28 16 32 Q20 24 26 28 Q32 24 36 32 Q32 28 26 32" fill="#16a34a"/>
+    
+    <rect x="120" y="24" width="4" height="40" fill="#92400e"/>
+    <path d="M122 24 Q116 20 112 24 Q116 16 122 20 Q128 16 132 24 Q128 20 122 24" fill="#16a34a"/>
+    
+    <!-- Mountains in background -->
+    <path d="M0 48 L20 24 L40 48 Z" fill="#059669" opacity="0.6"/>
+    <path d="M120 48 L140 20 L160 48 Z" fill="#059669" opacity="0.6"/>
+  </g>
+  
+  <!-- App name -->
+  <text x="96" y="170" text-anchor="middle" fill="white" font-family="serif" font-size="14" font-weight="bold">Heaven of Munroe</text>
+</svg>

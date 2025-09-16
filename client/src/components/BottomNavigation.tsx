@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home, Ship, Images, MapPin } from "lucide-react";
+import { Home, Ship, Images, MapPin, User } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 export default function BottomNavigation() {
@@ -32,6 +32,12 @@ export default function BottomNavigation() {
       label: "Services",
       icon: Ship,
       action: () => scrollToSection("services")
+    },
+    {
+      id: "about-us",
+      label: "About",
+      icon: User,
+      action: () => scrollToSection("about-us")
     },
     {
       id: "gallery",

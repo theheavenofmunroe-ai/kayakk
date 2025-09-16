@@ -1,9 +1,9 @@
 export default function Footer() {
   const socialLinks = [
-    { icon: "fab fa-facebook-f", color: "primary", href: "#" },
-    { icon: "fab fa-instagram", color: "secondary", href: "#" },
-    { icon: "fab fa-whatsapp", color: "accent", href: "#" },
-    { icon: "fab fa-youtube", color: "primary", href: "#" }
+    { icon: "fab fa-facebook-f", color: "[#1877F2]", href: "https://www.facebook.com/profile.php?id=100066795641064" },
+    { icon: "fab fa-instagram", color: "[#E4405F]", href: "https://www.instagram.com/heaven_of_munroe" },
+    { icon: "fab fa-whatsapp", color: "[#25D366]", href: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Heaven of Munroe services" },
+    { icon: "fab fa-youtube", color: "[#FF0000]", href: "#" }
   ];
 
   const essentialLinks = [
@@ -45,11 +45,14 @@ export default function Footer() {
               {socialLinks.map((link, index) => (
                 <a 
                   key={index}
-                  href={link.href} 
-                  className={`w-10 h-10 bg-${link.color} rounded-lg flex items-center justify-center hover:bg-${link.color}/80 transition-colors`}
+                  href={link.href}
+                  target={link.href.startsWith('https://') ? '_blank' : '_self'}
+                  rel={link.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
+                  className="w-10 h-10 rounded-lg flex items-center justify-center hover:opacity-80 transition-all"
+                  style={{ backgroundColor: link.color.replace(/[\[\]]/g, '') }}
                   data-testid={`social-link-${index}`}
                 >
-                  <i className={`${link.icon} text-${link.color}-foreground`}></i>
+                  <i className={`${link.icon} text-white`}></i>
                 </a>
               ))}
             </div>

@@ -42,10 +42,10 @@ export default function InquiryForm({ selectedPackage, onClose, onSuccess }: Inq
     { id: "family-adventure", name: "Family Adventure - ₹1200", price: 1200 },
     { id: "romantic-sunset", name: "Romantic Sunset - ₹1500", price: 1500 },
     { id: "full-day-explorer", name: "Full Day Explorer - ₹2500", price: 2500 },
-    { id: "canal-boating", name: "Canal Boating - ₹500/hour", price: 500 },
+    { id: "canal-boating", name: "Canal Boating - ₹600/hour", price: 600 },
     { id: "mini-houseboat", name: "Mini House Boat - ₹1200/day", price: 1200 },
-    { id: "homestay-rooms", name: "Home Stay Rooms - ₹800/night", price: 800 },
-    { id: "lake-foods", name: "Lake Foods - ₹250/meal", price: 250 }
+    { id: "homestay-rooms", name: "Home Stay Rooms - ₹1800/night", price: 1800 },
+    { id: "lake-foods", name: "Lake Foods - ₹600/meal", price: 600 }
   ];
 
   const timeSlots = [

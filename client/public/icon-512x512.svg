@@ -1,0 +1,52 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="64" fill="#2563eb"/>
+  <g transform="translate(64, 64)">
+    <!-- Water waves -->
+    <path d="M32 240 Q64 224 96 240 T160 240 Q192 224 224 240 T288 240 Q320 224 352 240" stroke="#60a5fa" stroke-width="8" fill="none"/>
+    <path d="M32 256 Q64 240 96 256 T160 256 Q192 240 224 256 T288 256 Q320 240 352 256" stroke="#93c5fd" stroke-width="6" fill="none"/>
+    <path d="M32 272 Q64 256 96 272 T160 272 Q192 256 224 272 T288 272 Q320 256 352 272" stroke="#bfdbfe" stroke-width="6" fill="none"/>
+    <path d="M32 288 Q64 272 96 288 T160 288 Q192 272 224 288 T288 288 Q320 272 352 288" stroke="#dbeafe" stroke-width="4" fill="none"/>
+    
+    <!-- Kayak -->
+    <ellipse cx="192" cy="180" rx="100" ry="20" fill="#dc2626" transform="rotate(-15 192 180)"/>
+    <ellipse cx="192" cy="180" rx="90" ry="16" fill="#ef4444" transform="rotate(-15 192 180)"/>
+    <ellipse cx="192" cy="180" rx="80" ry="12" fill="#f87171" transform="rotate(-15 192 180)"/>
+    
+    <!-- Paddle -->
+    <rect x="240" y="140" width="60" height="10" rx="5" fill="#92400e" transform="rotate(-30 270 145)"/>
+    <ellipse cx="290" cy="120" rx="15" ry="30" fill="#92400e" transform="rotate(-30 290 120)"/>
+    <ellipse cx="290" cy="120" rx="12" ry="25" fill="#a3520e" transform="rotate(-30 290 120)"/>
+    
+    <!-- Palm trees -->
+    <rect x="60" y="80" width="12" height="80" fill="#92400e"/>
+    <path d="M66 80 Q50 70 40 80 Q50 60 66 70 Q82 60 92 80 Q82 70 66 80" fill="#16a34a"/>
+    <path d="M66 80 Q45 75 35 85 Q45 65 66 75 Q87 65 97 85 Q87 75 66 80" fill="#22c55e"/>
+    
+    <rect x="300" y="60" width="12" height="100" fill="#92400e"/>
+    <path d="M306 60 Q290 50 280 60 Q290 40 306 50 Q322 40 332 60 Q322 50 306 60" fill="#16a34a"/>
+    <path d="M306 60 Q285 55 275 65 Q285 45 306 55 Q327 45 337 65 Q327 55 306 60" fill="#22c55e"/>
+    
+    <!-- Additional palm tree -->
+    <rect x="320" y="100" width="8" height="60" fill="#92400e"/>
+    <path d="M324 100 Q312 95 308 100 Q312 85 324 95 Q336 85 340 100 Q336 95 324 100" fill="#16a34a"/>
+    
+    <!-- Mountains in background -->
+    <path d="M0 120 L40 60 L80 120 Z" fill="#059669" opacity="0.6"/>
+    <path d="M20 120 L60 70 L100 120 Z" fill="#10b981" opacity="0.5"/>
+    <path d="M280 120 L320 50 L360 120 Z" fill="#059669" opacity="0.6"/>
+    <path d="M300 120 L340 60 L380 120 Z" fill="#10b981" opacity="0.5"/>
+    
+    <!-- Birds -->
+    <path d="M150 80 Q155 75 160 80 Q155 85 150 80" fill="white" opacity="0.8"/>
+    <path d="M170 70 Q175 65 180 70 Q175 75 170 70" fill="white" opacity="0.8"/>
+    <path d="M200 85 Q205 80 210 85 Q205 90 200 85" fill="white" opacity="0.6"/>
+    
+    <!-- Sun -->
+    <circle cx="320" cy="80" r="25" fill="#fbbf24" opacity="0.8"/>
+    <circle cx="320" cy="80" r="20" fill="#f59e0b" opacity="0.9"/>
+  </g>
+  
+  <!-- App name -->
+  <text x="256" y="450" text-anchor="middle" fill="white" font-family="serif" font-size="36" font-weight="bold">Heaven of Munroe</text>
+  <text x="256" y="480" text-anchor="middle" fill="#93c5fd" font-family="sans-serif" font-size="18">Kerala Backwater Experience</text>
+</svg>

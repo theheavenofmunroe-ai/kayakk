@@ -11,8 +11,22 @@ import {
   bookingInquiries, contactMessages, heroContent, aboutContent,
   boatingPackages, testimonials, galleryImages, contactInfo, contentSections
 } from "@shared/schema";
-import { db } from "./db";
-import { eq, desc } from "drizzle-orm";
+// Conditional import - only import db if DATABASE_URL is available
+let db: any = null;
+let eq: any = null;
+let desc: any = null;
+
+try {
+  if (process.env.DATABASE_URL) {
+    const dbModule = require("./db");
+    const drizzleModule = require("drizzle-orm");
+    db = dbModule.db;
+    eq = drizzleModule.eq;
+    desc = drizzleModule.desc;
+  }
+} catch (error) {
+  console.log("Database not available, using in-memory storage");
+}
 
 export interface IStorage {
   // Existing booking and contact methods
@@ -283,4 +297,210 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// In-memory storage implementation for development without database
+class InMemoryStorage implements IStorage {
+  private bookingInquiries: BookingInquiry[] = [];
+  private contactMessages: ContactMessage[] = [];
+  private heroContentData: HeroContent | null = null;
+  private aboutContentData: AboutContent | null = null;
+  private boatingPackagesData: BoatingPackage[] = [];
+  private testimonialsData: Testimonial[] = [];
+  private galleryImagesData: GalleryImage[] = [];
+  private contactInfoData: ContactInfo | null = null;
+  private contentSectionsData: Map<string, ContentSection> = new Map();
+
+  async createBookingInquiry(inquiry: InsertBookingInquiry): Promise<BookingInquiry> {
+    const newInquiry: BookingInquiry = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...inquiry,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.bookingInquiries.push(newInquiry);
+    return newInquiry;
+  }
+
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const newMessage: ContactMessage = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...message,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.contactMessages.push(newMessage);
+    return newMessage;
+  }
+
+  async getBookingInquiries(): Promise<BookingInquiry[]> {
+    return [...this.bookingInquiries].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getContactMessages(): Promise<ContactMessage[]> {
+    return [...this.contactMessages].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getHeroContent(): Promise<HeroContent | null> {
+    return this.heroContentData;
+  }
+
+  async updateHeroContent(content: InsertHeroContent): Promise<HeroContent> {
+    this.heroContentData = {
+      id: this.heroContentData?.id || Math.random().toString(36).substr(2, 9),
+      ...content,
+      isActive: true,
+      createdAt: this.heroContentData?.createdAt || new Date(),
+      updatedAt: new Date()
+    };
+    return this.heroContentData;
+  }
+
+  async getAboutContent(): Promise<AboutContent | null> {
+    return this.aboutContentData;
+  }
+
+  async updateAboutContent(content: InsertAboutContent): Promise<AboutContent> {
+    this.aboutContentData = {
+      id: this.aboutContentData?.id || Math.random().toString(36).substr(2, 9),
+      ...content,
+      isActive: true,
+      createdAt: this.aboutContentData?.createdAt || new Date(),
+      updatedAt: new Date()
+    };
+    return this.aboutContentData;
+  }
+
+  async getBoatingPackages(): Promise<BoatingPackage[]> {
+    return [...this.boatingPackagesData];
+  }
+
+  async createBoatingPackage(packageData: InsertBoatingPackage): Promise<BoatingPackage> {
+    const newPackage: BoatingPackage = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...packageData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.boatingPackagesData.push(newPackage);
+    return newPackage;
+  }
+
+  async updateBoatingPackage(id: string, packageData: Partial<InsertBoatingPackage>): Promise<BoatingPackage> {
+    const index = this.boatingPackagesData.findIndex(p => p.id === id);
+    if (index === -1) throw new Error('Package not found');
+    
+    this.boatingPackagesData[index] = {
+      ...this.boatingPackagesData[index],
+      ...packageData,
+      updatedAt: new Date()
+    };
+    return this.boatingPackagesData[index];
+  }
+
+  async deleteBoatingPackage(id: string): Promise<void> {
+    const index = this.boatingPackagesData.findIndex(p => p.id === id);
+    if (index === -1) throw new Error('Package not found');
+    this.boatingPackagesData.splice(index, 1);
+  }
+
+  async getTestimonials(): Promise<Testimonial[]> {
+    return [...this.testimonialsData];
+  }
+
+  async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
+    const newTestimonial: Testimonial = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...testimonial,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.testimonialsData.push(newTestimonial);
+    return newTestimonial;
+  }
+
+  async updateTestimonial(id: string, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
+    const index = this.testimonialsData.findIndex(t => t.id === id);
+    if (index === -1) throw new Error('Testimonial not found');
+    
+    this.testimonialsData[index] = {
+      ...this.testimonialsData[index],
+      ...testimonial,
+      updatedAt: new Date()
+    };
+    return this.testimonialsData[index];
+  }
+
+  async deleteTestimonial(id: string): Promise<void> {
+    const index = this.testimonialsData.findIndex(t => t.id === id);
+    if (index === -1) throw new Error('Testimonial not found');
+    this.testimonialsData.splice(index, 1);
+  }
+
+  async getGalleryImages(): Promise<GalleryImage[]> {
+    return [...this.galleryImagesData];
+  }
+
+  async createGalleryImage(image: InsertGalleryImage): Promise<GalleryImage> {
+    const newImage: GalleryImage = {
+      id: Math.random().toString(36).substr(2, 9),
+      ...image,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.galleryImagesData.push(newImage);
+    return newImage;
+  }
+
+  async updateGalleryImage(id: string, image: Partial<InsertGalleryImage>): Promise<GalleryImage> {
+    const index = this.galleryImagesData.findIndex(i => i.id === id);
+    if (index === -1) throw new Error('Image not found');
+    
+    this.galleryImagesData[index] = {
+      ...this.galleryImagesData[index],
+      ...image,
+      updatedAt: new Date()
+    };
+    return this.galleryImagesData[index];
+  }
+
+  async deleteGalleryImage(id: string): Promise<void> {
+    const index = this.galleryImagesData.findIndex(i => i.id === id);
+    if (index === -1) throw new Error('Image not found');
+    this.galleryImagesData.splice(index, 1);
+  }
+
+  async getContactInfo(): Promise<ContactInfo | null> {
+    return this.contactInfoData;
+  }
+
+  async updateContactInfo(info: InsertContactInfo): Promise<ContactInfo> {
+    this.contactInfoData = {
+      id: this.contactInfoData?.id || Math.random().toString(36).substr(2, 9),
+      ...info,
+      createdAt: this.contactInfoData?.createdAt || new Date(),
+      updatedAt: new Date()
+    };
+    return this.contactInfoData;
+  }
+
+  async getContentSection(sectionKey: string): Promise<ContentSection | null> {
+    return this.contentSectionsData.get(sectionKey) || null;
+  }
+
+  async updateContentSection(sectionKey: string, content: InsertContentSection): Promise<ContentSection> {
+    const existing = this.contentSectionsData.get(sectionKey);
+    const section: ContentSection = {
+      id: existing?.id || Math.random().toString(36).substr(2, 9),
+      sectionKey,
+      ...content,
+      createdAt: existing?.createdAt || new Date(),
+      updatedAt: new Date()
+    };
+    this.contentSectionsData.set(sectionKey, section);
+    return section;
+  }
+}
+
+// Use in-memory storage if no database URL is provided, otherwise use database storage
+export const storage = process.env.DATABASE_URL ? new DatabaseStorage() : new InMemoryStorage();
+
+console.log(`Using ${process.env.DATABASE_URL ? 'Database' : 'In-Memory'} storage`);

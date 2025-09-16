@@ -6,12 +6,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import InquiryPage from "@/pages/inquiry";
 import NotFound from "@/pages/not-found";
+import AdminGallery from "@/components/AdminGallery";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/inquiry" component={InquiryPage} />
+      <Route path="/admin" component={AdminGallery} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -21,6 +24,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <PWAInstallPrompt />
         <Toaster />
         <Router />
       </TooltipProvider>

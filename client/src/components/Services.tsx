@@ -12,7 +12,7 @@ export default function Services() {
       id: "canal-boating",
       title: "Canal Boating Adventure",
       description: "Experience the enchanting network of narrow canals and waterways of Munroe Island. Navigate through pristine mangrove forests, discover hidden lagoons, and witness diverse bird species in their natural habitat. Our traditional country boats provide an authentic Kerala backwater experience with knowledgeable local guides sharing fascinating stories about the region's rich history and culture. Perfect for all ages and skill levels - a peaceful journey through nature's paradise.",
-      price: "₹500/hour",
+      price: "₹600/hour",
       icon: "fas fa-water",
       whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Canal Boating Adventure service",
       image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -30,7 +30,7 @@ export default function Services() {
       id: "homestay-rooms",
       title: "Home Stay Rooms",
       description: "Experience authentic Kerala hospitality in our traditional homes with modern amenities and local cuisine.",
-      price: "₹800/night",
+      price: "₹1800/night",
       icon: "fas fa-home",
       whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Home Stay Rooms",
       image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -39,10 +39,19 @@ export default function Services() {
       id: "lake-foods",
       title: "Lake Foods",
       description: "Authentic Kerala cuisine with fresh seafood and traditional recipes. Home-cooked meals with local ingredients.",
-      price: "₹250/meal",
+      price: "₹600/meal",
       icon: "fas fa-utensils",
       whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Lake Foods service",
       image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      id: "kayaking",
+      title: "Kayaking Adventure",
+      description: "Paddle through the serene backwaters of Munroe Island in single or double kayaks. Explore narrow waterways, mangrove tunnels, and hidden coves at your own pace. Perfect for adventure enthusiasts and nature lovers seeking an active water experience with stunning views of the Kerala countryside.",
+      price: "₹250/hour",
+      icon: "fas fa-swimmer",
+      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Kayaking Adventure service",
+      image: "/images/1 (15).jpg"
     }
   ];
 
@@ -78,18 +87,18 @@ export default function Services() {
               <div className="relative overflow-hidden h-56">
                 {/* Main background image */}
                 <div 
-                  className="absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-125 group-hover:rotate-2"
+                  className="absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-110"
                   style={{
                     backgroundImage: `url(${service.image})`,
-                    filter: 'brightness(0.9) contrast(1.1)',
+                    filter: 'brightness(1.1) contrast(1.3)',
                   }}
                 ></div>
                 
-                {/* Dynamic gradient overlay with shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-green-600/20 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                {/* Light bottom gradient for text readability only */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                 
-                {/* Sophisticated gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                {/* Dynamic gradient overlay with shimmer effect - only on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-green-600/5 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                 
                 {/* Floating icon with premium animation */}
                 <div className="absolute top-6 right-6 transform transition-all duration-700 group-hover:scale-125 group-hover:-rotate-12 group-hover:-translate-y-2">
