@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import AboutEvan from "../components/AboutEvan";
 import Services from "../components/Services";
 import BoatingPackages from "../components/BoatingPackages";
+import Testimonials from "../components/Testimonials";
 import PhotoGallery from "../components/PhotoGallery";
 import ContactSection from "../components/ContactSection";
 import Footer from "../components/Footer";
@@ -16,6 +17,7 @@ export default function Home() {
       <AboutEvan />
       <Services />
       <BoatingPackages />
+      <Testimonials />
       <PhotoGallery />
       <ContactSection />
       <Footer />

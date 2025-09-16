@@ -49,82 +49,175 @@ export default function Services() {
   return (
     <section id="services" className="py-16 bg-gradient-to-b from-blue-50 to-green-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Munroe Island Boating Packages
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover the beauty of Munroe Island with our authentic services
-          </p>
+        <div className="text-center mb-12 animate-fade-in-up">
+          <div className="text-reveal mb-4">
+            <h2 className="text-reveal-inner font-serif text-3xl md:text-4xl font-bold gradient-shift">
+              Munroe Island Experiences
+            </h2>
+          </div>
+          <div className="text-reveal">
+            <p className="text-reveal-inner text-lg text-gray-600 max-w-2xl mx-auto">
+              Immerse yourself in authentic Kerala backwater adventures
+            </p>
+          </div>
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div 
               key={service.id} 
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 transform hover-lift animate-fade-in-up group animate-zoom-in"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className="relative bg-white rounded-3xl overflow-hidden morphing-shadow card-3d water-ripple floating-particles group animate-fade-in-stagger cursor-pointer"
+              style={{ 
+                animationDelay: `${index * 200}ms`,
+                transformStyle: 'preserve-3d'
+              }}
             >
-              <div className="relative overflow-hidden">
+              {/* Premium image section with multi-layer animations */}
+              <div className="relative overflow-hidden h-56">
+                {/* Main background image */}
                 <div 
-                  className="h-48 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  className="absolute inset-0 bg-cover bg-center transition-all duration-1000 group-hover:scale-125 group-hover:rotate-2"
                   style={{
                     backgroundImage: `url(${service.image})`,
+                    filter: 'brightness(0.9) contrast(1.1)',
                   }}
                 ></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
-                  <i className={`${service.icon} text-blue-600 text-xl`}></i>
+                
+                {/* Dynamic gradient overlay with shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-green-600/20 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                
+                {/* Sophisticated gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                
+                {/* Floating icon with premium animation */}
+                <div className="absolute top-6 right-6 transform transition-all duration-700 group-hover:scale-125 group-hover:-rotate-12 group-hover:-translate-y-2">
+                  <div className="bg-white/95 backdrop-blur-md rounded-2xl w-14 h-14 flex items-center justify-center shadow-xl cursor-glow">
+                    <i className={`${service.icon} text-blue-600 text-2xl animate-float`}></i>
+                  </div>
+                </div>
+                
+                {/* Reveal content overlay */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-4 group-hover:translate-y-0">
+                  <h4 className="text-white font-bold text-lg mb-2 drop-shadow-lg">
+                    {service.title}
+                  </h4>
+                  <p className="text-white/90 text-sm leading-relaxed drop-shadow-md">
+                    {service.description}
+                  </p>
+                </div>
+                
+                {/* Shimmer effect overlay */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-1000">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </div>
               </div>
               
-              <div className="p-6">
-                <h3 className="font-serif text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                  {service.description}
-                </p>
+              {/* Enhanced content section */}
+              <div className="p-6 relative">
+                {/* Background pattern */}
+                <div className="absolute inset-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: 'radial-gradient(circle at 25px 25px, #3b82f6 2px, transparent 2px)',
+                    backgroundSize: '50px 50px'
+                  }}></div>
+                </div>
                 
-                <div className="flex flex-col space-y-3">
-                  <div className="text-2xl font-bold text-green-600 text-center">
-                    {service.price}
+                <div className="relative z-10">
+                  <h3 className="font-serif text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-all duration-500 transform group-hover:scale-105">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 text-sm mb-6 leading-relaxed opacity-100 group-hover:opacity-0 transition-all duration-500">
+                    {service.description}
+                  </p>
+                  
+                  {/* Enhanced pricing section */}
+                  <div className="flex justify-center mb-6">
+                    <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-2xl font-bold text-lg shadow-lg transform group-hover:scale-110 group-hover:-rotate-1 transition-all duration-500 cursor-glow">
+                      {service.price}
+                    </div>
                   </div>
                   
-                  <div className="flex space-x-2">
+                  {/* Premium booking buttons */}
+                  <div className="flex space-x-3 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-700 delay-200">
                     <button 
-                      onClick={() => openDirectBooking(service.id)}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openDirectBooking(service.id);
+                      }}
+                      className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:-translate-y-1 active:scale-95 water-ripple cursor-glow"
                       data-testid={`button-book-direct-${service.id}`}
                     >
-                      <i className="fas fa-calendar-plus mr-2"></i>
+                      <i className="fas fa-calendar-plus mr-2 animate-bounce-gentle"></i>
                       Book Direct
                     </button>
                     <button 
-                      onClick={() => window.open(service.whatsapp, '_blank')}
-                      className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(service.whatsapp, '_blank');
+                      }}
+                      className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:-translate-y-1 active:scale-95 water-ripple cursor-glow"
                       data-testid={`button-whatsapp-${service.id}`}
                     >
-                      <i className="fab fa-whatsapp mr-2"></i>
+                      <i className="fab fa-whatsapp mr-2 animate-wiggle"></i>
                       WhatsApp
                     </button>
                   </div>
                 </div>
               </div>
+              
+              {/* Border glow effect */}
+              <div className="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-blue-400 via-green-400 to-blue-400 opacity-0 group-hover:opacity-20 transition-opacity duration-500 -z-10"></div>
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">Need help choosing the right package for you?</p>
-          <button 
-            onClick={() => window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I need help choosing the right package", '_blank')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            data-testid="button-get-help"
-          >
-            <i className="fas fa-comments mr-2"></i>
-            Get Help Choosing
-          </button>
+        <div className="text-center mt-16 animate-fade-in-up delay-500">
+          <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl max-w-2xl mx-auto water-ripple morphing-shadow">
+            <div className="mb-6">
+              <h3 className="font-serif text-2xl font-bold gradient-shift mb-3">
+                Need Personalized Guidance?
+              </h3>
+              <p className="text-gray-600">
+                Let our local experts help you choose the perfect experience for your Kerala adventure
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                onClick={() => window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I need help choosing the right package for my Kerala backwater experience", '_blank')}
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-2xl font-bold transition-all duration-700 transform hover:scale-110 hover:shadow-2xl hover:-translate-y-2 active:scale-95 water-ripple cursor-glow breathing-scale"
+                data-testid="button-get-help"
+              >
+                <i className="fas fa-user-friends mr-3 animate-bounce-gentle"></i>
+                Get Expert Advice
+              </button>
+              
+              <button 
+                onClick={() => window.open("tel:+919633836839", '_self')}
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-4 rounded-2xl font-bold transition-all duration-700 transform hover:scale-110 hover:shadow-2xl hover:-translate-y-2 active:scale-95 water-ripple cursor-glow breathing-scale"
+                data-testid="button-call-now"
+              >
+                <i className="fas fa-phone mr-3 animate-wiggle"></i>
+                Call Now
+              </button>
+            </div>
+            
+            <div className="mt-6 flex justify-center items-center space-x-6 text-sm text-gray-500">
+              <div className="flex items-center space-x-2">
+                <i className="fas fa-clock text-blue-500"></i>
+                <span>24/7 Support</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <i className="fas fa-map-marker-alt text-green-500"></i>
+                <span>Local Experts</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <i className="fas fa-star text-yellow-500"></i>
+                <span>5.0 Rating</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
