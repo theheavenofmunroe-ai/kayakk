@@ -1,7 +1,13 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 
 export default function BoatingPackages() {
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
+  const [, setLocation] = useLocation();
+
+  const openDirectBooking = (packageId: string) => {
+    setLocation(`/inquiry?package=${packageId}`);
+  };
 
   const packages = [
     {
@@ -159,21 +165,32 @@ export default function BoatingPackages() {
                   <div className="flex flex-col space-y-2">
                     <button 
                       onClick={() => setSelectedPackage(selectedPackage === pkg.id ? null : pkg.id)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-105"
+                      className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-105"
                       data-testid={`button-details-${pkg.id}`}
                     >
                       <i className="fas fa-info-circle mr-1"></i>
                       {selectedPackage === pkg.id ? 'Hide Details' : 'View Details'}
                     </button>
                     
-                    <button 
-                      onClick={() => window.open(pkg.whatsapp, '_blank')}
-                      className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:-translate-y-1 animate-pulse-slow"
-                      data-testid={`button-book-${pkg.id}`}
-                    >
-                      <i className="fab fa-whatsapp mr-1 animate-bounce-gentle"></i>
-                      Book Now
-                    </button>
+                    <div className="flex space-x-2">
+                      <button 
+                        onClick={() => openDirectBooking(pkg.id)}
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                        data-testid={`button-book-direct-${pkg.id}`}
+                      >
+                        <i className="fas fa-calendar-plus mr-1"></i>
+                        Book Direct
+                      </button>
+                      
+                      <button 
+                        onClick={() => window.open(pkg.whatsapp, '_blank')}
+                        className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                        data-testid={`button-whatsapp-${pkg.id}`}
+                      >
+                        <i className="fab fa-whatsapp mr-1"></i>
+                        WhatsApp
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

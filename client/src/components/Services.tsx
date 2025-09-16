@@ -1,4 +1,12 @@
+import { useLocation } from "wouter";
+
 export default function Services() {
+  const [, setLocation] = useLocation();
+
+  const openDirectBooking = (serviceId: string) => {
+    setLocation(`/inquiry?package=${serviceId}`);
+  };
+
   const services = [
     {
       id: "canal-boating",
@@ -78,18 +86,29 @@ export default function Services() {
                   {service.description}
                 </p>
                 
-                <div className="flex justify-between items-center">
-                  <div className="text-2xl font-bold text-green-600">
+                <div className="flex flex-col space-y-3">
+                  <div className="text-2xl font-bold text-green-600 text-center">
                     {service.price}
                   </div>
-                  <button 
-                    onClick={() => window.open(service.whatsapp, '_blank')}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-semibold transition-all duration-500 transform hover:scale-110 hover:shadow-lg hover:-translate-y-1 active:scale-95 animate-pulse-slow"
-                    data-testid={`button-book-${service.id}`}
-                  >
-                    <i className="fab fa-whatsapp mr-2 animate-bounce-gentle"></i>
-                    Book Now
-                  </button>
+                  
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => openDirectBooking(service.id)}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+                      data-testid={`button-book-direct-${service.id}`}
+                    >
+                      <i className="fas fa-calendar-plus mr-2"></i>
+                      Book Direct
+                    </button>
+                    <button 
+                      onClick={() => window.open(service.whatsapp, '_blank')}
+                      className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1 active:scale-95"
+                      data-testid={`button-whatsapp-${service.id}`}
+                    >
+                      <i className="fab fa-whatsapp mr-2"></i>
+                      WhatsApp
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
