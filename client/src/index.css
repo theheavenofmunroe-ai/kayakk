@@ -379,6 +379,70 @@
     border-right: 2px solid #2563eb;
     animation: typing 3s steps(40) 1s 1 normal both, blinkCursor 0.8s infinite;
   }
+
+  /* Staggered animation for service cards */
+  .fade-in-stagger {
+    animation: fadeInStagger 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* 3D card effect with proper depth */
+  .card-3d {
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .card-3d:hover {
+    transform: perspective(1000px) rotateY(-8deg) rotateX(3deg) translateY(-10px);
+  }
+
+  /* Mobile-friendly hover states */
+  @media (hover: none) and (pointer: coarse) {
+    .card-3d:hover {
+      transform: none;
+    }
+    .group:hover .opacity-0 {
+      opacity: 1;
+    }
+    .group:hover .translate-y-4 {
+      transform: translateY(0);
+    }
+  }
+
+  /* Performance optimization classes */
+  .transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* Accessibility: Reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in-stagger,
+    .animate-fade-in-up,
+    .animate-slide-in-left,
+    .animate-slide-in-right,
+    .animate-zoom-in,
+    .animate-float,
+    .animate-pulse-slow,
+    .animate-bounce-gentle,
+    .animate-rotate-slow,
+    .breathing-scale,
+    .gradient-shift,
+    .floating-particles::after {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    
+    .card-3d:hover {
+      transform: translateY(-5px);
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-3px);
+    }
+  }
 }
 
 @keyframes fadeInUp {

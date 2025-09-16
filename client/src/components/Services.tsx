@@ -66,10 +66,12 @@ export default function Services() {
           {services.map((service, index) => (
             <div 
               key={service.id} 
-              className="relative bg-white rounded-3xl overflow-hidden morphing-shadow card-3d water-ripple floating-particles group animate-fade-in-stagger cursor-pointer"
+              className="relative bg-white rounded-3xl overflow-hidden morphing-shadow card-3d water-ripple group fade-in-stagger cursor-pointer transform-gpu"
               style={{ 
                 animationDelay: `${index * 200}ms`,
-                transformStyle: 'preserve-3d'
+                perspective: '1000px',
+                transformStyle: 'preserve-3d',
+                willChange: 'transform'
               }}
             >
               {/* Premium image section with multi-layer animations */}
