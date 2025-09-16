@@ -1,28 +1,16 @@
 {
   "version": 2,
   "name": "munroe-island-kayaking",
-  "builds": [
+  "rewrites": [
     {
-      "src": "client/dist/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "server/index.ts",
-      "use": "@vercel/node"
+      "source": "/api/(.*)",
+      "destination": "/server/index.ts"
     }
   ],
-  "routes": [
+  "redirects": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server/index.ts"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "/client/public/images/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/client/dist/$1"
+      "source": "/images/(.*)",
+      "destination": "/client/public/images/$1"
     }
   ],
   "env": {
