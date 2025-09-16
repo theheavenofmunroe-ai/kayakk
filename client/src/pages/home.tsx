@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import MunroeIslandDescription from "../components/MunroeIslandDescription";
-import AboutEvan from "../components/AboutEvan";
+import AboutUs from "../components/AboutUs";
 import Services from "../components/Services";
 import BoatingPackages from "../components/BoatingPackages";
 import Testimonials from "../components/Testimonials";
@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
       <Hero />
       <MunroeIslandDescription />
-      <AboutEvan />
+      <AboutUs />
       <Services />
       <BoatingPackages />
       <Testimonials />
