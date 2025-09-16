@@ -56,20 +56,6 @@ export default function Hero() {
           </button>
         </div>
         
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
-          <div className="glass-effect rounded-lg p-4 hover:bg-white/20 transition-all duration-500 transform hover-lift animate-fade-in-up delay-500">
-            <i className="fas fa-star text-yellow-400 text-2xl mb-2 animate-float"></i>
-            <p className="text-sm font-medium">Trusted Partner</p>
-          </div>
-          <div className="glass-effect rounded-lg p-4 hover:bg-white/20 transition-all duration-500 transform hover-lift animate-fade-in-up delay-600">
-            <i className="fas fa-water text-blue-400 text-2xl mb-2 animate-float"></i>
-            <p className="text-sm font-medium">Best Boating Experience</p>
-          </div>
-          <div className="glass-effect rounded-lg p-4 hover:bg-white/20 transition-all duration-500 transform hover-lift animate-fade-in-up delay-700">
-            <i className="fas fa-home text-green-400 text-2xl mb-2 animate-float"></i>
-            <p className="text-sm font-medium">Comfortable Stay</p>
-          </div>
-        </div>
       </div>
       
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60 animate-bounce">

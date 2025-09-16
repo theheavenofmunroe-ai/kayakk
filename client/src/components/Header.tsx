@@ -19,12 +19,20 @@ export default function Header() {
     setLocation("/inquiry");
   };
 
+  const navigateToHome = () => {
+    setLocation("/");
+  };
+
   return (
     <>
       <header className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <button 
+              onClick={navigateToHome}
+              className="flex items-center space-x-3 hover:opacity-80 transition-all duration-300 transform hover:scale-105"
+              data-testid="button-logo-home"
+            >
               <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <i className="fas fa-water text-white text-lg"></i>
               </div>
@@ -32,7 +40,7 @@ export default function Header() {
                 <h1 className="font-serif font-bold text-xl text-gray-800">Heaven of Munroe</h1>
                 <p className="text-xs text-gray-500">Munroe Island Boating Partner</p>
               </div>
-            </div>
+            </button>
             
             
             <div className="flex items-center space-x-3">
@@ -65,14 +73,21 @@ export default function Header() {
           <div className="fixed right-0 top-0 h-full w-80 bg-white shadow-xl transform transition-transform duration-300">
             <div className="p-6">
               <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center space-x-3">
+                <button 
+                  onClick={() => {
+                    navigateToHome();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center space-x-3 hover:opacity-80 transition-all duration-300"
+                  data-testid="button-mobile-logo-home"
+                >
                   <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                     <i className="fas fa-water text-white"></i>
                   </div>
                   <div>
                     <h2 className="font-serif font-bold text-lg">Heaven of Munroe</h2>
                   </div>
-                </div>
+                </button>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="text-gray-500 hover:text-gray-700"
