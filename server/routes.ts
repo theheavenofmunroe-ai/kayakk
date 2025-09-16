@@ -1,7 +1,17 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertBookingInquirySchema, insertContactMessageSchema } from "@shared/schema";
+import { 
+  insertBookingInquirySchema, 
+  insertContactMessageSchema,
+  insertHeroContentSchema,
+  insertAboutContentSchema,
+  insertBoatingPackageSchema,
+  insertTestimonialSchema,
+  insertGalleryImageSchema,
+  insertContactInfoSchema,
+  insertContentSectionSchema
+} from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -64,29 +74,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all inquiries (admin endpoint)
-  app.get("/api/booking-inquiries", async (req, res) => {
+  // Admin endpoints removed for security - sensitive customer data should not be publicly accessible
+
+  // CONTENT MANAGEMENT API ROUTES
+
+  // Hero Content
+  app.get("/api/hero-content", async (req, res) => {
     try {
-      const inquiries = await storage.getBookingInquiries();
-      res.json(inquiries);
+      const content = await storage.getHeroContent();
+      res.json(content);
     } catch (error) {
-      res.status(500).json({ 
-        success: false, 
-        message: "Server error" 
-      });
+      res.status(500).json({ success: false, message: "Server error" });
     }
   });
 
-  // Get all contact messages (admin endpoint)
-  app.get("/api/contact-messages", async (req, res) => {
+  // About Content
+  app.get("/api/about-content", async (req, res) => {
     try {
-      const messages = await storage.getContactMessages();
-      res.json(messages);
+      const content = await storage.getAboutContent();
+      res.json(content);
     } catch (error) {
-      res.status(500).json({ 
-        success: false, 
-        message: "Server error" 
-      });
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+  // Boating Packages
+  app.get("/api/boating-packages", async (req, res) => {
+    try {
+      const packages = await storage.getBoatingPackages();
+      res.json(packages);
+    } catch (error) {
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+  // Testimonials
+  app.get("/api/testimonials", async (req, res) => {
+    try {
+      const testimonials = await storage.getTestimonials();
+      res.json(testimonials);
+    } catch (error) {
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+  // Gallery Images
+  app.get("/api/gallery-images", async (req, res) => {
+    try {
+      const images = await storage.getGalleryImages();
+      res.json(images);
+    } catch (error) {
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+  // Contact Info
+  app.get("/api/contact-info", async (req, res) => {
+    try {
+      const info = await storage.getContactInfo();
+      res.json(info);
+    } catch (error) {
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+
+  // Content Sections
+  app.get("/api/content-sections/:key", async (req, res) => {
+    try {
+      const section = await storage.getContentSection(req.params.key);
+      res.json(section);
+    } catch (error) {
+      res.status(500).json({ success: false, message: "Server error" });
     }
   });
 

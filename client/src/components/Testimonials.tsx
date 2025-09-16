@@ -1,9 +1,20 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import type { Testimonial } from "@shared/schema";
 
 export default function Testimonials() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
-  const testimonials = [
+  // Fetch testimonials from database
+  const { data: testimonials, isLoading } = useQuery<Testimonial[]>({
+    queryKey: ['/api/testimonials'],
+    retry: 1
+  });
+
+  // Use database testimonials or empty array as fallback
+  const testimonialsData = testimonials || [];
+
+  const staticTestimonials = [
     {
       id: 1,
       name: "Sarah Johnson",
@@ -61,11 +72,13 @@ export default function Testimonials() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
+    if (testimonialsData.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentTestimonial((prev) => (prev + 1) % testimonialsData.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [testimonialsData.length]);
 
   const handleTestimonialChange = (index: number) => {
     setCurrentTestimonial(index);
@@ -94,6 +107,38 @@ export default function Testimonials() {
         return 'text-yellow-500';
     }
   };
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-slate-50 via-blue-50 to-green-50 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-300 rounded w-1/2 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Empty state
+  if (testimonialsData.length === 0) {
+    return (
+      <section className="py-20 bg-gradient-to-b from-slate-50 via-blue-50 to-green-50 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold gradient-shift mb-4">
+              What Our Guests Say
+            </h2>
+            <p className="text-lg text-gray-600">No testimonials available at the moment.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 bg-gradient-to-b from-slate-50 via-blue-50 to-green-50 relative overflow-hidden">
@@ -152,28 +197,28 @@ export default function Testimonials() {
 
               {/* Review Text */}
               <blockquote className="text-xl md:text-2xl text-gray-700 font-medium leading-relaxed mb-8 animate-fade-in-up">
-                "{testimonials[currentTestimonial].review}"
+                "{testimonialsData[currentTestimonial]?.review || 'No testimonials available'}"
               </blockquote>
 
               {/* Reviewer Info */}
               <div className="flex items-center justify-center space-x-4 animate-slide-up">
                 <div className="relative">
                   <img 
-                    src={testimonials[currentTestimonial].image} 
-                    alt={testimonials[currentTestimonial].name}
+                    src={testimonialsData[currentTestimonial]?.userImage || '/default-avatar.png'} 
+                    alt={testimonialsData[currentTestimonial]?.name || 'User'}
                     className="w-16 h-16 rounded-full shadow-lg hover-bounce"
                   />
                   <div className="absolute -bottom-1 -right-1">
-                    <i className={`${getPlatformIcon(testimonials[currentTestimonial].platform)} ${getPlatformColor(testimonials[currentTestimonial].platform)} text-lg bg-white rounded-full p-1 shadow-md`}></i>
+                    <i className={`${getPlatformIcon(testimonialsData[currentTestimonial]?.platform || 'default')} ${getPlatformColor(testimonialsData[currentTestimonial]?.platform || 'default')} text-lg bg-white rounded-full p-1 shadow-md`}></i>
                   </div>
                 </div>
                 
                 <div className="text-left">
-                  <p className="font-bold text-gray-800 text-lg">{testimonials[currentTestimonial].name}</p>
+                  <p className="font-bold text-gray-800 text-lg">{testimonialsData[currentTestimonial]?.name || 'Anonymous'}</p>
                   <p className="text-gray-600 text-sm flex items-center space-x-2">
-                    <span>via {testimonials[currentTestimonial].platform}</span>
+                    <span>via {testimonialsData[currentTestimonial]?.platform || 'Review Platform'}</span>
                     <span>•</span>
-                    <span>{testimonials[currentTestimonial].date}</span>
+                    <span>{testimonialsData[currentTestimonial]?.reviewDate || 'Recently'}</span>
                   </p>
                 </div>
               </div>
@@ -183,7 +228,7 @@ export default function Testimonials() {
 
         {/* Testimonial Navigation */}
         <div className="flex justify-center space-x-3 mb-8">
-          {testimonials.map((_, index) => (
+          {testimonialsData.map((_, index) => (
             <button
               key={index}
               onClick={() => handleTestimonialChange(index)}
@@ -211,7 +256,7 @@ export default function Testimonials() {
             >
               <div className="flex items-start space-x-3 mb-4">
                 <img 
-                  src={testimonial.image} 
+                  src={testimonial.userImage} 
                   alt={testimonial.name}
                   className="w-12 h-12 rounded-full shadow-md"
                 />
@@ -233,7 +278,7 @@ export default function Testimonials() {
                 "{testimonial.review}"
               </p>
               
-              <p className="text-xs text-gray-500 mt-3">{testimonial.date}</p>
+              <p className="text-xs text-gray-500 mt-3">{testimonial.reviewDate}</p>
             </div>
           ))}
         </div>

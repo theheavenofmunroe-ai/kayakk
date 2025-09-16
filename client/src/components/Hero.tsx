@@ -1,8 +1,16 @@
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import type { HeroContent } from "@shared/schema";
 
 export default function Hero() {
   const [, setLocation] = useLocation();
   
+  // Fetch hero content from database
+  const { data: heroContent, isLoading } = useQuery<HeroContent | null>({
+    queryKey: ['/api/hero-content'],
+    retry: 1
+  });
+
   const scrollToServices = () => {
     const element = document.getElementById("services");
     if (element) {
@@ -14,6 +22,15 @@ export default function Hero() {
     setLocation("/inquiry");
   };
 
+  // Default values as fallback
+  const title = heroContent?.title || "Heaven of Munroe";
+  const subtitle = heroContent?.subtitle || "Room Stay & Food Boating Service";  
+  const description = heroContent?.description || "Experience Authentic Kerala Backwaters";
+  const backgroundImage = heroContent?.backgroundImage || "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80";
+  const primaryButtonText = heroContent?.primaryButtonText || "Discover Paradise";
+  const secondaryButtonText = heroContent?.secondaryButtonText || "Book Your Journey";
+  const scrollHintText = heroContent?.scrollHintText || "✨ Scroll down to explore our services";
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden wave-background floating-particles">
       {/* Enhanced background with better contrast */}
@@ -21,7 +38,7 @@ export default function Hero() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")',
+          backgroundImage: `url("${backgroundImage}")`,
           filter: 'brightness(0.7) contrast(1.2)',
         }}
       ></div>
@@ -34,20 +51,20 @@ export default function Hero() {
           {/* Enhanced typography with better contrast and animations */}
           <div className="text-reveal mb-6">
             <h1 className="text-reveal-inner font-serif text-4xl md:text-6xl lg:text-8xl font-bold leading-tight gradient-shift drop-shadow-2xl">
-              Heaven of Munroe
+              {title}
             </h1>
           </div>
           
           {/* Better contrast for subtitle text */}
           <div className="text-reveal">
             <p className="text-reveal-inner text-xl md:text-2xl mb-3 font-medium text-white drop-shadow-lg animate-slide-in-left delay-200">
-              Room Stay & Food Boating Service
+              {subtitle}
             </p>
           </div>
           
           <div className="text-reveal">
             <p className="text-reveal-inner text-lg md:text-xl mb-12 text-gray-100 drop-shadow-md animate-slide-in-right delay-300">
-              Experience Authentic Kerala Backwaters
+              {description}
             </p>
           </div>
         </div>
@@ -60,7 +77,7 @@ export default function Hero() {
             data-testid="button-discover-services"
           >
             <i className="fas fa-compass mr-3 animate-rotate-slow text-xl"></i>
-            Discover Paradise
+            {primaryButtonText}
           </button>
           
           <button 
@@ -69,14 +86,14 @@ export default function Hero() {
             data-testid="button-book-inquiry"
           >
             <i className="fas fa-calendar-plus mr-3 animate-bounce-gentle text-xl"></i>
-            Book Your Journey
+            {secondaryButtonText}
           </button>
         </div>
         
         {/* Enhanced floating action hint */}
         <div className="mt-16 animate-fade-in-up delay-500">
           <p className="text-white/80 text-sm mb-4 drop-shadow-md">
-            ✨ Scroll down to explore our services
+            {scrollHintText}
           </p>
         </div>
       </div>

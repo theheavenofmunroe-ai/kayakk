@@ -1,15 +1,57 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import type { BoatingPackage } from "@shared/schema";
 
 export default function BoatingPackages() {
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
   const [, setLocation] = useLocation();
 
+  // Fetch boating packages from database
+  const { data: packages, isLoading } = useQuery<BoatingPackage[]>({
+    queryKey: ['/api/boating-packages'],
+    retry: 1
+  });
+
   const openDirectBooking = (packageId: string) => {
     setLocation(`/inquiry?package=${packageId}`);
   };
 
-  const packages = [
+  // Use database packages or empty array as fallback
+  const packagesData = packages || [];
+
+  // If loading or no packages, show appropriate state
+  if (isLoading) {
+    return (
+      <section id="packages" className="py-16 bg-gradient-to-b from-green-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-300 rounded w-1/2 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-3/4 mx-auto"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (packagesData.length === 0) {
+    return (
+      <section id="packages" className="py-16 bg-gradient-to-b from-green-50 to-blue-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+              Premium Boating Packages
+            </h2>
+            <p className="text-lg text-gray-600">No packages available at the moment.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const staticPackages = [
     {
       id: "sunrise-special",
       title: "Sunrise Special",
@@ -101,7 +143,7 @@ export default function BoatingPackages() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          {packages.map((pkg, index) => (
+          {packagesData.map((pkg, index) => (
             <div 
               key={pkg.id}
               className={`bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover-lift animate-fade-in-up ${
@@ -110,7 +152,7 @@ export default function BoatingPackages() {
               style={{ animationDelay: `${index * 200}ms` }}
             >
               <div className="relative">
-                {pkg.popular && (
+                {pkg.isPopular && (
                   <div className="absolute top-4 left-4 z-10">
                     <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold animate-pulse-slow">
                       🔥 Most Popular
@@ -183,7 +225,7 @@ export default function BoatingPackages() {
                       </button>
                       
                       <button 
-                        onClick={() => window.open(pkg.whatsapp, '_blank')}
+                        onClick={() => window.open(pkg.whatsappLink, '_blank')}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1"
                         data-testid={`button-whatsapp-${pkg.id}`}
                       >
