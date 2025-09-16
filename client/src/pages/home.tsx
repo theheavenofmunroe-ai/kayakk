@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import Hero from "../components/Hero";
+import MunroeIslandDescription from "../components/MunroeIslandDescription";
 import AboutEvan from "../components/AboutEvan";
 import Services from "../components/Services";
 import BoatingPackages from "../components/BoatingPackages";
@@ -14,6 +15,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <Hero />
+      <MunroeIslandDescription />
       <AboutEvan />
       <Services />
       <BoatingPackages />
