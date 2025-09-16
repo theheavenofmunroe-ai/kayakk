@@ -128,6 +128,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/gallery-images", async (req, res) => {
+    try {
+      const image = insertGalleryImageSchema.parse(req.body);
+      const newImage = await storage.createGalleryImage(image);
+      res.json({ 
+        success: true, 
+        message: "Gallery image created successfully", 
+        image: newImage 
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          success: false, 
+          message: "Invalid image data", 
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ 
+          success: false, 
+          message: "Server error. Please try again later." 
+        });
+      }
+    }
+  });
+
   // Contact Info
   app.get("/api/contact-info", async (req, res) => {
     try {
