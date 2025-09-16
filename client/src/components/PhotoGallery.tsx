@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Images, ChevronUp } from "lucide-react";
+import { Images, ChevronUp, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { GalleryImage } from "@shared/schema";
 
 export default function PhotoGallery() {
   const [showAllImages, setShowAllImages] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<GalleryImage[]>([]);
 
   const { data: galleryImages = [], isLoading, isError } = useQuery<GalleryImage[]>({
     queryKey: ['/api/gallery-images'],
@@ -101,6 +104,51 @@ export default function PhotoGallery() {
   // Show limited images initially, or all if "View All" is clicked
   const imagesToShow = showAllImages ? filteredImages : filteredImages.slice(0, 6);
 
+  // Handle opening lightbox
+  const openLightbox = (imageIndex: number) => {
+    const allImages = showAllImages ? filteredImages : filteredImages.slice(0, 6);
+    setLightboxImages(allImages);
+    setCurrentImageIndex(imageIndex);
+    setLightboxOpen(true);
+  };
+
+  // Handle closing lightbox
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  // Navigate to next image
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === lightboxImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  // Navigate to previous image
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? lightboxImages.length - 1 : prevIndex - 1
+    );
+  };
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      
+      if (event.key === 'Escape') {
+        closeLightbox();
+      } else if (event.key === 'ArrowRight') {
+        nextImage();
+      } else if (event.key === 'ArrowLeft') {
+        prevImage();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen, lightboxImages.length]);
+
   return (
     <section id="gallery" className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -158,7 +206,8 @@ export default function PhotoGallery() {
             {imagesToShow.map((image, index) => (
               <div 
                 key={image.id}
-                className="aspect-square rounded-xl overflow-hidden shadow-lg transition-all duration-300"
+                className="aspect-square rounded-xl overflow-hidden shadow-lg transition-all duration-300 cursor-pointer hover:scale-105"
+                onClick={() => openLightbox(index)}
                 data-testid={`gallery-image-${image.id}`}
               >
                 <img 
@@ -194,6 +243,72 @@ export default function PhotoGallery() {
           )}
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && lightboxImages.length > 0 && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+          onClick={closeLightbox}
+          data-testid="lightbox-overlay"
+        >
+          <div 
+            className="relative max-w-full max-h-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-all"
+              data-testid="lightbox-close"
+            >
+              <X size={24} />
+            </button>
+
+            {/* Navigation Buttons */}
+            {lightboxImages.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-all"
+                  data-testid="lightbox-prev"
+                >
+                  <ChevronLeft size={32} />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition-all"
+                  data-testid="lightbox-next"
+                >
+                  <ChevronRight size={32} />
+                </button>
+              </>
+            )}
+
+            {/* Main Image */}
+            <img
+              src={lightboxImages[currentImageIndex]?.imageUrl}
+              alt={lightboxImages[currentImageIndex]?.altText}
+              className="max-w-full max-h-screen object-contain"
+              data-testid="lightbox-image"
+            />
+
+            {/* Image Info */}
+            <div className="absolute bottom-4 left-4 right-4 text-center text-white bg-black bg-opacity-50 p-4 rounded-lg">
+              <h3 className="text-lg font-semibold mb-2">
+                {lightboxImages[currentImageIndex]?.title}
+              </h3>
+              <p className="text-sm opacity-90">
+                {lightboxImages[currentImageIndex]?.description}
+              </p>
+              {lightboxImages.length > 1 && (
+                <p className="text-xs mt-2 opacity-75">
+                  {currentImageIndex + 1} of {lightboxImages.length}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
     </section>
   );
