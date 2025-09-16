@@ -6,20 +6,10 @@ export default function Footer() {
     { icon: "fab fa-youtube", color: "primary", href: "#" }
   ];
 
-  const quickLinks = [
-    { label: "Our Services", href: "#services" },
-    { label: "Local Cuisine", href: "#dining" },
-    { label: "Photo Gallery", href: "#gallery" },
-    { label: "Testimonials", href: "#" },
-    { label: "Blog & Stories", href: "#" }
-  ];
-
-  const supportLinks = [
-    { label: "Booking Help", href: "#" },
-    { label: "Cancellation Policy", href: "#" },
-    { label: "Travel Guidelines", href: "#" },
-    { label: "Safety Information", href: "#" },
-    { label: "Contact Us", href: "#contact" }
+  const essentialLinks = [
+    { label: "Services", href: "#services" },
+    { label: "Gallery", href: "#gallery" },
+    { label: "Contact", href: "#contact" }
   ];
 
   const scrollToSection = (href: string) => {
@@ -34,7 +24,7 @@ export default function Footer() {
   return (
     <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
@@ -47,7 +37,7 @@ export default function Footer() {
             </div>
             
             <p className="text-background/70 mb-6 leading-relaxed">
-              Discover the untouched beauty of Munroe Island through authentic kayaking adventures, traditional homestay experiences, and genuine Kerala hospitality. Create memories that last a lifetime in nature's paradise.
+              Experience authentic Kerala backwaters at Munroe Island.
             </p>
             
             <div className="flex space-x-4">
@@ -65,31 +55,14 @@ export default function Footer() {
           </div>
           
           <div>
-            <h5 className="font-semibold text-lg mb-4">Quick Links</h5>
+            <h5 className="font-semibold text-lg mb-4">Essential Links</h5>
             <ul className="space-y-2">
-              {quickLinks.map((link, index) => (
+              {essentialLinks.map((link, index) => (
                 <li key={index}>
                   <button 
                     onClick={() => scrollToSection(link.href)}
                     className="text-background/70 hover:text-background transition-colors text-left"
-                    data-testid={`quick-link-${index}`}
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h5 className="font-semibold text-lg mb-4">Support</h5>
-            <ul className="space-y-2">
-              {supportLinks.map((link, index) => (
-                <li key={index}>
-                  <button 
-                    onClick={() => scrollToSection(link.href)}
-                    className="text-background/70 hover:text-background transition-colors text-left"
-                    data-testid={`support-link-${index}`}
+                    data-testid={`essential-link-${index}`}
                   >
                     {link.label}
                   </button>
@@ -99,14 +72,9 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-background/20 mt-12 pt-8 text-center">
+        <div className="border-t border-background/20 mt-8 pt-6 text-center">
           <p className="text-background/60 text-sm">
-            © 2024 Heaven of Munroe. All rights reserved. | Kerala Tourism Registration: KL-TR-2024-001234 | 
-            <a href="#" className="hover:text-background transition-colors ml-1">Privacy Policy</a> | 
-            <a href="#" className="hover:text-background transition-colors ml-1">Terms of Service</a>
-          </p>
-          <p className="text-background/40 text-xs mt-2">
-            Designed with ❤️ for sustainable tourism in Kerala
+            © 2024 Heaven of Munroe. All rights reserved.
           </p>
         </div>
       </div>
