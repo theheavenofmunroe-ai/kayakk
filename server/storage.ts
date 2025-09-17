@@ -11,22 +11,9 @@ import {
   bookingInquiries, contactMessages, heroContent, aboutContent,
   boatingPackages, testimonials, galleryImages, contactInfo, contentSections
 } from "@shared/schema";
-// Conditional import - only import db if DATABASE_URL is available
-let db: any = null;
-let eq: any = null;
-let desc: any = null;
-
-try {
-  if (process.env.DATABASE_URL) {
-    const dbModule = require("./db");
-    const drizzleModule = require("drizzle-orm");
-    db = dbModule.db;
-    eq = drizzleModule.eq;
-    desc = drizzleModule.desc;
-  }
-} catch (error) {
-  console.log("Database not available, using in-memory storage");
-}
+// Database imports - direct import since we have DATABASE_URL available
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
   // Existing booking and contact methods
@@ -500,7 +487,7 @@ class InMemoryStorage implements IStorage {
   }
 }
 
-// Use in-memory storage if no database URL is provided, otherwise use database storage
-export const storage = process.env.DATABASE_URL ? new DatabaseStorage() : new InMemoryStorage();
+// Use database storage since we have the DATABASE_URL
+export const storage = new DatabaseStorage();
 
-console.log(`Using ${process.env.DATABASE_URL ? 'Database' : 'In-Memory'} storage`);
+console.log("Using Database storage");
