@@ -21,7 +21,6 @@ export default function Testimonials() {
       platform: "Google Maps",
       rating: 5,
       review: "Absolutely magical experience! The sunrise boat tour was breathtaking. The traditional breakfast on the boat was delicious and the hospitality was exceptional. Highly recommended!",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
       date: "2 weeks ago"
     },
     {
@@ -30,7 +29,6 @@ export default function Testimonials() {
       platform: "TripAdvisor",
       rating: 5,
       review: "Best boating experience in Kerala! The family adventure package was perfect for our group. Kids loved the fishing experience and the traditional lunch was amazing.",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
       date: "1 month ago"
     },
     {
@@ -39,7 +37,6 @@ export default function Testimonials() {
       platform: "Google Reviews",
       rating: 5,
       review: "The romantic sunset cruise exceeded all expectations! The candlelight dinner on the boat was incredibly romantic. Perfect for our anniversary celebration.",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612e952?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
       date: "3 weeks ago"
     },
     {
@@ -48,7 +45,6 @@ export default function Testimonials() {
       platform: "TripAdvisor",
       rating: 5,
       review: "Authentic Kerala experience! The homestay was comfortable and the hosts were incredibly welcoming. The traditional food was the highlight of our trip.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
       date: "2 months ago"
     },
     {
@@ -57,7 +53,6 @@ export default function Testimonials() {
       platform: "Google Maps",
       rating: 5,
       review: "Heaven of Munroe truly lives up to its name! The full-day explorer package was incredible. Every moment was well-planned and the guides were knowledgeable.",
-      image: "https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
       date: "1 week ago"
     },
     {
@@ -66,7 +61,6 @@ export default function Testimonials() {
       platform: "TripAdvisor",
       rating: 5,
       review: "Outstanding service and unforgettable memories! The canal boating through the backwaters was peaceful and rejuvenating. Will definitely return!",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
       date: "3 weeks ago"
     }
   ];
@@ -201,21 +195,16 @@ export default function Testimonials() {
               </blockquote>
 
               {/* Reviewer Info */}
-              <div className="flex items-center justify-center space-x-4 animate-slide-up">
-                <div className="relative">
-                  <img 
-                    src={testimonialsData[currentTestimonial]?.userImage || '/default-avatar.png'} 
-                    alt={testimonialsData[currentTestimonial]?.name || 'User'}
-                    className="w-16 h-16 rounded-full shadow-lg hover-bounce"
-                  />
-                  <div className="absolute -bottom-1 -right-1">
-                    <i className={`${getPlatformIcon(testimonialsData[currentTestimonial]?.platform || 'default')} ${getPlatformColor(testimonialsData[currentTestimonial]?.platform || 'default')} text-lg bg-white rounded-full p-1 shadow-md`}></i>
+              <div className="text-center animate-slide-up">
+                <div className="flex items-center justify-center mb-2">
+                  <div className="bg-blue-100 rounded-full p-2 mr-2">
+                    <i className={`${getPlatformIcon(testimonialsData[currentTestimonial]?.platform || 'default')} ${getPlatformColor(testimonialsData[currentTestimonial]?.platform || 'default')} text-lg`}></i>
                   </div>
                 </div>
                 
-                <div className="text-left">
+                <div>
                   <p className="font-bold text-gray-800 text-lg">{testimonialsData[currentTestimonial]?.name || 'Anonymous'}</p>
-                  <p className="text-gray-600 text-sm flex items-center space-x-2">
+                  <p className="text-gray-600 text-sm flex items-center justify-center space-x-2">
                     <span>via {testimonialsData[currentTestimonial]?.platform || 'Review Platform'}</span>
                     <span>•</span>
                     <span>{testimonialsData[currentTestimonial]?.reviewDate || 'Recently'}</span>
@@ -254,12 +243,7 @@ export default function Testimonials() {
               data-testid={`testimonial-card-${testimonial.id}`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-start space-x-3 mb-4">
-                <img 
-                  src={testimonial.userImage} 
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full shadow-md"
-                />
+              <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <p className="font-semibold text-gray-800">{testimonial.name}</p>
                   <div className="flex items-center space-x-1">

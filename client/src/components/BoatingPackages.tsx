@@ -146,11 +146,13 @@ export default function BoatingPackages() {
           {packagesData.map((pkg, index) => (
             <div 
               key={pkg.id}
-              className={`bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover-lift animate-fade-in-up ${
+              className={`bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover-lift hover:scale-105 hover:-translate-y-4 hover:rotate-1 animate-fade-in-up group relative ${
                 selectedPackage === pkg.id ? 'ring-4 ring-blue-400' : ''
               }`}
               style={{ animationDelay: `${index * 200}ms` }}
             >
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-r from-blue-400/20 to-green-400/20 blur-xl -z-10"></div>
               <div className="relative">
                 {pkg.isPopular && (
                   <div className="absolute top-4 left-4 z-10">
@@ -160,12 +162,29 @@ export default function BoatingPackages() {
                   </div>
                 )}
                 
-                <div className="relative overflow-hidden">
+                <div className="relative overflow-hidden group">
                   <div 
-                    className="h-64 bg-cover bg-center transition-transform duration-700 hover:scale-110"
+                    className="h-64 bg-cover bg-center transition-all duration-1000 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 filter brightness-100 contrast-100 saturate-100 group-hover:brightness-110 group-hover:contrast-125 group-hover:saturate-125"
                     style={{ backgroundImage: `url(${pkg.image})` }}
                   ></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  
+                  {/* Animated overlay effects */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-all duration-700 group-hover:from-black/40 group-hover:via-blue-500/10 group-hover:to-transparent"></div>
+                  
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-out"></div>
+                  </div>
+                  
+                  {/* Floating particles effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-bounce delay-100"></div>
+                    <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-green-400 rounded-full animate-bounce delay-300"></div>
+                    <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-bounce delay-500"></div>
+                  </div>
+                  
+                  {/* Color tint overlay */}
+                  <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-all duration-700"></div>
                   
                   <div className="absolute bottom-4 left-4 text-white">
                     <div className="flex items-center space-x-2 mb-2">

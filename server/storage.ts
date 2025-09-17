@@ -11,7 +11,7 @@ import {
   bookingInquiries, contactMessages, heroContent, aboutContent,
   boatingPackages, testimonials, galleryImages, contactInfo, contentSections
 } from "@shared/schema";
-// Database imports - direct import since we have DATABASE_URL available
+// Database imports - conditionally available based on DATABASE_URL
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
 
@@ -51,9 +51,339 @@ export interface IStorage {
   updateContentSection(sectionKey: string, content: InsertContentSection): Promise<ContentSection>;
 }
 
+// In-memory storage fallback for when database is not available
+export class MemStorage implements IStorage {
+  private mockBookingInquiries: BookingInquiry[] = [];
+  private mockContactMessages: ContactMessage[] = [];
+  private mockHeroContent: HeroContent | null = {
+    id: "hero-1",
+    title: "Experience the Magic of Munroe Island",
+    subtitle: "Backwater Boating Paradise",
+    description: "Discover hidden lagoons, diverse bird species, and traditional country boat experiences",
+    backgroundImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    primaryButtonText: "Book Experience",
+    secondaryButtonText: "Learn More", 
+    scrollHintText: "Scroll to explore",
+    isActive: true,
+    updatedAt: new Date()
+  };
+  
+  private mockAboutContent: AboutContent | null = {
+    id: "about-1",
+    title: "About Heaven of Munroe",
+    hostName: "Local Guides",
+    hostImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    introText: "Your gateway to authentic Kerala backwater experiences",
+    description1: "Heaven of Munroe offers traditional boating experiences in the pristine backwaters of Munroe Island. Our expert local guides share fascinating stories about the region's rich history and culture.",
+    description2: "Perfect for all ages and skill levels, we provide a peaceful journey through nature's paradise with authentic Kerala hospitality.",
+    expandedText1: null,
+    expandedText2: null,
+    languages: "Malayalam, Tamil, English, Hindi",
+    certifications: "Tourism Department Certified",
+    isActive: true,
+    updatedAt: new Date()
+  };
+
+  private mockPackages: BoatingPackage[] = [
+    {
+      id: "sunrise-special",
+      packageId: "sunrise-special",
+      title: "Sunrise Special",
+      duration: "2 Hours",
+      price: "₹800",
+      originalPrice: "₹1000",
+      description: "Experience the magical sunrise over Munroe Island backwaters with traditional breakfast",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      features: ["Early morning boat ride (5:30 AM - 7:30 AM)", "Traditional Kerala breakfast on boat", "Bird watching opportunities", "Photography sessions", "Local guide and stories"],
+      isPopular: true,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Sunrise Special package",
+      sortOrder: 1,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: "family-adventure",
+      packageId: "family-adventure", 
+      title: "Family Adventure",
+      duration: "4 Hours",
+      price: "₹1200",
+      originalPrice: "₹1500",
+      description: "Perfect family experience with lunch, activities, and comfortable boat exploration",
+      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      features: ["4-hour guided boat tour", "Traditional Kerala lunch", "Fishing experience for kids", "Island hopping", "Cultural village visit", "Swimming opportunities"],
+      isPopular: false,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Family Adventure package",
+      sortOrder: 2,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ];
+
+  private mockTestimonials: Testimonial[] = [
+    {
+      id: "test-1",
+      name: "Sarah Johnson", 
+      platform: "Google Maps",
+      rating: 5,
+      review: "Absolutely magical experience! The sunrise boat tour was breathtaking. The traditional breakfast on the boat was delicious and the hospitality was exceptional. Highly recommended!",
+      userImage: "",
+      reviewDate: "2 weeks ago",
+      sortOrder: 1,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: "test-2", 
+      name: "Rajesh Kumar",
+      platform: "TripAdvisor",
+      rating: 5,
+      review: "Best boating experience in Kerala! The family adventure package was perfect for our group. Kids loved the fishing experience and the traditional lunch was amazing.",
+      userImage: "",
+      reviewDate: "1 month ago",
+      sortOrder: 2,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ];
+
+  private mockGalleryImages: GalleryImage[] = [
+    {
+      id: "gallery-1",
+      title: "Sunrise Boat Ride",
+      description: "Beautiful sunrise over backwaters",
+      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      altText: "Sunrise boat ride",
+      category: "boat-tours",
+      sortOrder: 1,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ];
+
+  private mockContactInfo: ContactInfo | null = {
+    id: "contact-1",
+    businessName: "Heaven of Munroe",
+    description: "Your gateway to authentic Kerala backwater experiences",
+    email: "info@heavenofmunroe.com",
+    phone: "+91 9633836839",
+    whatsappNumber: "919633836839",
+    address: "Munroe Island, Kollam, Kerala",
+    businessHours: "6:00 AM - 8:00 PM",
+    facebook: null,
+    instagram: null,
+    googleMaps: null,
+    isActive: true,
+    updatedAt: new Date()
+  };
+
+  private mockContentSections: Map<string, ContentSection> = new Map([
+    ["munroe-island-main", {
+      id: "content-1",
+      sectionKey: "munroe-island-main",
+      title: "Discover Munroe Island",
+      content: "Experience the pristine beauty of Kerala's backwaters through our authentic boating adventures.",
+      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      isActive: true,
+      updatedAt: new Date()
+    }]
+  ]);
+
+  async createBookingInquiry(insertInquiry: InsertBookingInquiry): Promise<BookingInquiry> {
+    const inquiry: BookingInquiry = {
+      id: `inquiry-${Date.now()}`,
+      ...insertInquiry,
+      createdAt: new Date()
+    };
+    this.mockBookingInquiries.push(inquiry);
+    return inquiry;
+  }
+
+  async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    const message: ContactMessage = {
+      id: `message-${Date.now()}`,
+      ...insertMessage,
+      createdAt: new Date()
+    };
+    this.mockContactMessages.push(message);
+    return message;
+  }
+
+  async getBookingInquiries(): Promise<BookingInquiry[]> {
+    return this.mockBookingInquiries.slice().reverse();
+  }
+
+  async getContactMessages(): Promise<ContactMessage[]> {
+    return this.mockContactMessages.slice().reverse();
+  }
+
+  async getHeroContent(): Promise<HeroContent | null> {
+    return this.mockHeroContent;
+  }
+
+  async updateHeroContent(content: InsertHeroContent): Promise<HeroContent> {
+    this.mockHeroContent = {
+      id: this.mockHeroContent?.id || "hero-1",
+      ...content,
+      updatedAt: new Date()
+    };
+    return this.mockHeroContent;
+  }
+
+  async getAboutContent(): Promise<AboutContent | null> {
+    return this.mockAboutContent;
+  }
+
+  async updateAboutContent(content: InsertAboutContent): Promise<AboutContent> {
+    this.mockAboutContent = {
+      id: this.mockAboutContent?.id || "about-1",
+      ...content,
+      updatedAt: new Date()
+    };
+    return this.mockAboutContent;
+  }
+
+  async getBoatingPackages(): Promise<BoatingPackage[]> {
+    return this.mockPackages;
+  }
+
+  async createBoatingPackage(packageData: InsertBoatingPackage): Promise<BoatingPackage> {
+    const newPackage: BoatingPackage = {
+      id: `package-${Date.now()}`,
+      ...packageData,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.mockPackages.push(newPackage);
+    return newPackage;
+  }
+
+  async updateBoatingPackage(id: string, packageData: Partial<InsertBoatingPackage>): Promise<BoatingPackage> {
+    const index = this.mockPackages.findIndex(p => p.id === id);
+    if (index === -1) throw new Error("Package not found");
+    
+    this.mockPackages[index] = {
+      ...this.mockPackages[index],
+      ...packageData,
+      updatedAt: new Date()
+    };
+    return this.mockPackages[index];
+  }
+
+  async deleteBoatingPackage(id: string): Promise<void> {
+    const index = this.mockPackages.findIndex(p => p.id === id);
+    if (index !== -1) {
+      this.mockPackages.splice(index, 1);
+    }
+  }
+
+  async getTestimonials(): Promise<Testimonial[]> {
+    return this.mockTestimonials;
+  }
+
+  async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
+    const newTestimonial: Testimonial = {
+      id: `testimonial-${Date.now()}`,
+      ...testimonial,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.mockTestimonials.push(newTestimonial);
+    return newTestimonial;
+  }
+
+  async updateTestimonial(id: string, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
+    const index = this.mockTestimonials.findIndex(t => t.id === id);
+    if (index === -1) throw new Error("Testimonial not found");
+    
+    this.mockTestimonials[index] = {
+      ...this.mockTestimonials[index],
+      ...testimonial,
+      updatedAt: new Date()
+    };
+    return this.mockTestimonials[index];
+  }
+
+  async deleteTestimonial(id: string): Promise<void> {
+    const index = this.mockTestimonials.findIndex(t => t.id === id);
+    if (index !== -1) {
+      this.mockTestimonials.splice(index, 1);
+    }
+  }
+
+  async getGalleryImages(): Promise<GalleryImage[]> {
+    return this.mockGalleryImages;
+  }
+
+  async createGalleryImage(image: InsertGalleryImage): Promise<GalleryImage> {
+    const newImage: GalleryImage = {
+      id: `gallery-${Date.now()}`,
+      ...image,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.mockGalleryImages.push(newImage);
+    return newImage;
+  }
+
+  async updateGalleryImage(id: string, image: Partial<InsertGalleryImage>): Promise<GalleryImage> {
+    const index = this.mockGalleryImages.findIndex(g => g.id === id);
+    if (index === -1) throw new Error("Gallery image not found");
+    
+    this.mockGalleryImages[index] = {
+      ...this.mockGalleryImages[index],
+      ...image,
+      updatedAt: new Date()
+    };
+    return this.mockGalleryImages[index];
+  }
+
+  async deleteGalleryImage(id: string): Promise<void> {
+    const index = this.mockGalleryImages.findIndex(g => g.id === id);
+    if (index !== -1) {
+      this.mockGalleryImages.splice(index, 1);
+    }
+  }
+
+  async getContactInfo(): Promise<ContactInfo | null> {
+    return this.mockContactInfo;
+  }
+
+  async updateContactInfo(info: InsertContactInfo): Promise<ContactInfo> {
+    this.mockContactInfo = {
+      id: this.mockContactInfo?.id || "contact-1",
+      ...info,
+      updatedAt: new Date()
+    };
+    return this.mockContactInfo;
+  }
+
+  async getContentSection(sectionKey: string): Promise<ContentSection | null> {
+    return this.mockContentSections.get(sectionKey) || null;
+  }
+
+  async updateContentSection(sectionKey: string, content: InsertContentSection): Promise<ContentSection> {
+    const section: ContentSection = {
+      id: `section-${Date.now()}`,
+      sectionKey,
+      ...content,
+      updatedAt: new Date()
+    };
+    this.mockContentSections.set(sectionKey, section);
+    return section;
+  }
+}
+
 export class DatabaseStorage implements IStorage {
   // Existing booking and contact methods
   async createBookingInquiry(insertInquiry: InsertBookingInquiry): Promise<BookingInquiry> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [inquiry] = await db
       .insert(bookingInquiries)
       .values(insertInquiry)
@@ -487,7 +817,7 @@ class InMemoryStorage implements IStorage {
   }
 }
 
-// Use database storage since we have the DATABASE_URL
-export const storage = new DatabaseStorage();
+// Choose storage based on database availability
+export const storage = db ? new DatabaseStorage() : new MemStorage();
 
-console.log("Using Database storage");
+console.log(db ? "Using Database storage" : "Using In-memory storage fallback");
