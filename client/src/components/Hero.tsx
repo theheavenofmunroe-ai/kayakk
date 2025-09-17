@@ -26,7 +26,7 @@ export default function Hero() {
   const title = heroContent?.title || "Heaven of Munroe";
   const subtitle = heroContent?.subtitle || "Room Stay & Food Boating Service";  
   const description = heroContent?.description || "Experience Authentic Kerala Backwaters";
-  const backgroundImage = heroContent?.backgroundImage || "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80";
+  const backgroundImage = heroContent?.backgroundImage || "/images/backwater-boat-silhouette.jpg";
   const primaryButtonText = heroContent?.primaryButtonText || "Discover Paradise";
   const secondaryButtonText = heroContent?.secondaryButtonText || "Book Your Journey";
   const scrollHintText = heroContent?.scrollHintText || "✨ Scroll down to explore our services";

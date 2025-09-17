@@ -9,7 +9,7 @@ async function seed() {
       title: "Heaven of Munroe",
       subtitle: "Room Stay & Food Boating Service",
       description: "Experience Authentic Kerala Backwaters",
-      backgroundImage: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+      backgroundImage: "/images/backwater-boat-silhouette.jpg",
       primaryButtonText: "Discover Paradise",
       secondaryButtonText: "Book Your Journey",
       scrollHintText: "✨ Scroll down to explore our services"
@@ -21,7 +21,7 @@ async function seed() {
     const aboutData = {
       title: "Meet Evan - Your Local Host",
       hostName: "Evan",
-      hostImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      hostImage: "/images/1 (15).jpg",
       introText: "Born and raised on the pristine waters of Munroe Island, Evan has spent over two decades mastering the art of backwater navigation and hospitality.",
       description1: "His deep connection with the local ecosystem and authentic Kerala culture makes every journey a unique experience filled with stories, local wisdom, and genuine warmth.",
       description2: "When you book with Heaven of Munroe, you're not just getting a service - you're becoming part of Evan's extended family.",
@@ -49,7 +49,7 @@ async function seed() {
           "Photography sessions",
           "Local guide and stories"
         ],
-        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "/images/1 (1).jpg",
         isPopular: true,
         whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Sunrise Special package",
         isActive: true,
@@ -69,7 +69,7 @@ async function seed() {
           "Wildlife spotting",
           "Kids-friendly activities"
         ],
-        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "/images/1 (2).jpg",
         isPopular: false,
         whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Family Adventure package",
         isActive: true,
@@ -89,7 +89,7 @@ async function seed() {
           "Photography session",
           "Complimentary welcome drink"
         ],
-        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "/images/1 (3).jpg",
         isPopular: true,
         whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Romantic Sunset package",
         isActive: true,
@@ -109,7 +109,7 @@ async function seed() {
         platform: "Google Maps",
         rating: 5,
         review: "Absolutely magical experience! The sunrise boat tour was breathtaking. The traditional breakfast on the boat was delicious and the hospitality was exceptional. Highly recommended!",
-        userImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        userImage: "/images/1 (10).jpg",
         reviewDate: "2024-08-15",
         isActive: true,
         sortOrder: 1
@@ -119,7 +119,7 @@ async function seed() {
         platform: "TripAdvisor",
         rating: 5,
         review: "Best boating experience in Kerala! The family adventure package was perfect for our group. Kids loved the fishing experience and the traditional lunch was amazing.",
-        userImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        userImage: "/images/1 (11).jpg",
         reviewDate: "2024-08-01",
         isActive: true,
         sortOrder: 2
@@ -129,7 +129,7 @@ async function seed() {
         platform: "Google Reviews",
         rating: 5,
         review: "The romantic sunset cruise exceeded all expectations! The candlelight dinner on the boat was incredibly romantic. Perfect for our anniversary celebration.",
-        userImage: "https://images.unsplash.com/photo-1494790108755-2616b612e952?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        userImage: "/images/1 (12).jpg",
         reviewDate: "2024-08-10",
         isActive: true,
         sortOrder: 3
@@ -146,7 +146,7 @@ async function seed() {
       {
         title: "Golden Hour Backwaters",
         description: "Spectacular golden sunset reflecting on calm backwater channels",
-        imageUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        imageUrl: "/images/1 (20).jpg",
         altText: "Golden sunset over backwaters",
         category: "sunsets",
         isActive: true,
@@ -155,7 +155,7 @@ async function seed() {
       {
         title: "Traditional Boat Tour",
         description: "Authentic Kerala boat experience through narrow canals",
-        imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        imageUrl: "/images/1 (21).jpg",
         altText: "Traditional boat in backwaters",
         category: "boats",
         isActive: true,
@@ -164,7 +164,7 @@ async function seed() {
       {
         title: "Local Wildlife",
         description: "Discover diverse bird species and marine life",
-        imageUrl: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        imageUrl: "/images/1 (22).jpg",
         altText: "Birds and wildlife in backwaters",
         category: "wildlife",
         isActive: true,
@@ -200,14 +200,14 @@ async function seed() {
         sectionKey: "munroe-island-main",
         title: "Discover Munroe Island",
         content: "Experience the untouched beauty of Munroe Island, where emerald backwaters meet azure skies in perfect harmony.",
-        imageUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        imageUrl: "/images/canal.jpg",
         isActive: true
       },
       {
         sectionKey: "munroe-island-features",
         title: "Island Features",
         content: "Pristine canals, traditional fishing villages, coconut groves, and authentic Kerala hospitality await you.",
-        imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        imageUrl: "/images/boathouse.jpg",
         isActive: true
       }
     ];

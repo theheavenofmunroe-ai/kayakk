@@ -60,7 +60,7 @@ export class MemStorage implements IStorage {
     title: "Experience the Magic of Munroe Island",
     subtitle: "Backwater Boating Paradise",
     description: "Discover hidden lagoons, diverse bird species, and traditional country boat experiences",
-    backgroundImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    backgroundImage: "/images/backwater-boat-silhouette.jpg",
     primaryButtonText: "Book Experience",
     secondaryButtonText: "Learn More", 
     scrollHintText: "Scroll to explore",
@@ -72,7 +72,7 @@ export class MemStorage implements IStorage {
     id: "about-1",
     title: "About Heaven of Munroe",
     hostName: "Local Guides",
-    hostImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+    hostImage: "/images/1 (15).jpg",
     introText: "Your gateway to authentic Kerala backwater experiences",
     description1: "Heaven of Munroe offers traditional boating experiences in the pristine backwaters of Munroe Island. Our expert local guides share fascinating stories about the region's rich history and culture.",
     description2: "Perfect for all ages and skill levels, we provide a peaceful journey through nature's paradise with authentic Kerala hospitality.",
@@ -93,7 +93,7 @@ export class MemStorage implements IStorage {
       price: "₹800",
       originalPrice: "₹1000",
       description: "Experience the magical sunrise over Munroe Island backwaters with traditional breakfast",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/images/1 (1).jpg",
       features: ["Early morning boat ride (5:30 AM - 7:30 AM)", "Traditional Kerala breakfast on boat", "Bird watching opportunities", "Photography sessions", "Local guide and stories"],
       isPopular: true,
       whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Sunrise Special package",
@@ -110,7 +110,7 @@ export class MemStorage implements IStorage {
       price: "₹1200",
       originalPrice: "₹1500",
       description: "Perfect family experience with lunch, activities, and comfortable boat exploration",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      image: "/images/1 (2).jpg",
       features: ["4-hour guided boat tour", "Traditional Kerala lunch", "Fishing experience for kids", "Island hopping", "Cultural village visit", "Swimming opportunities"],
       isPopular: false,
       whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Family Adventure package",
@@ -155,7 +155,7 @@ export class MemStorage implements IStorage {
       id: "gallery-1",
       title: "Sunrise Boat Ride",
       description: "Beautiful sunrise over backwaters",
-      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageUrl: "/images/1 (20).jpg",
       altText: "Sunrise boat ride",
       category: "boat-tours",
       sortOrder: 1,
@@ -187,7 +187,7 @@ export class MemStorage implements IStorage {
       sectionKey: "munroe-island-main",
       title: "Discover Munroe Island",
       content: "Experience the pristine beauty of Kerala's backwaters through our authentic boating adventures.",
-      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageUrl: "/images/canal.jpg",
       isActive: true,
       updatedAt: new Date()
     }]
@@ -196,7 +196,14 @@ export class MemStorage implements IStorage {
   async createBookingInquiry(insertInquiry: InsertBookingInquiry): Promise<BookingInquiry> {
     const inquiry: BookingInquiry = {
       id: `inquiry-${Date.now()}`,
-      ...insertInquiry,
+      fullName: insertInquiry.fullName,
+      email: insertInquiry.email,
+      phone: insertInquiry.phone,
+      numberOfGuests: insertInquiry.numberOfGuests,
+      checkInDate: insertInquiry.checkInDate || null,
+      checkOutDate: insertInquiry.checkOutDate || null,
+      experiences: insertInquiry.experiences || null,
+      specialRequests: insertInquiry.specialRequests || null,
       createdAt: new Date()
     };
     this.mockBookingInquiries.push(inquiry);
@@ -226,12 +233,20 @@ export class MemStorage implements IStorage {
   }
 
   async updateHeroContent(content: InsertHeroContent): Promise<HeroContent> {
-    this.mockHeroContent = {
+    const updatedContent: HeroContent = {
       id: this.mockHeroContent?.id || "hero-1",
-      ...content,
+      title: content.title || "Heaven of Munroe",
+      subtitle: content.subtitle || "Room Stay & Food Boating Service",
+      description: content.description || "Experience Authentic Kerala Backwaters",
+      backgroundImage: content.backgroundImage || "/images/backwater-boat-silhouette.jpg",
+      primaryButtonText: content.primaryButtonText || "Discover Paradise",
+      secondaryButtonText: content.secondaryButtonText || "Book Your Journey",
+      scrollHintText: content.scrollHintText || "✨ Scroll down to explore our services",
+      isActive: content.isActive !== undefined ? content.isActive : true,
       updatedAt: new Date()
     };
-    return this.mockHeroContent;
+    this.mockHeroContent = updatedContent;
+    return updatedContent;
   }
 
   async getAboutContent(): Promise<AboutContent | null> {
@@ -239,12 +254,23 @@ export class MemStorage implements IStorage {
   }
 
   async updateAboutContent(content: InsertAboutContent): Promise<AboutContent> {
-    this.mockAboutContent = {
+    const updatedContent: AboutContent = {
       id: this.mockAboutContent?.id || "about-1",
-      ...content,
+      title: content.title || "Meet Evan - Your Local Host",
+      hostName: content.hostName || "Evan",
+      hostImage: content.hostImage || "/images/1 (15).jpg",
+      introText: content.introText || "Born and raised on the pristine waters of Munroe Island",
+      description1: content.description1 || "His deep connection with the local ecosystem",
+      description2: content.description2 || "When you book with Heaven of Munroe",
+      expandedText1: content.expandedText1 || null,
+      expandedText2: content.expandedText2 || null,
+      languages: content.languages || "English, Hindi, Malayalam",
+      certifications: content.certifications || "Tourism Board Approved",
+      isActive: content.isActive !== undefined ? content.isActive : true,
       updatedAt: new Date()
     };
-    return this.mockAboutContent;
+    this.mockAboutContent = updatedContent;
+    return updatedContent;
   }
 
   async getBoatingPackages(): Promise<BoatingPackage[]> {
@@ -254,7 +280,18 @@ export class MemStorage implements IStorage {
   async createBoatingPackage(packageData: InsertBoatingPackage): Promise<BoatingPackage> {
     const newPackage: BoatingPackage = {
       id: `package-${Date.now()}`,
-      ...packageData,
+      packageId: packageData.packageId,
+      title: packageData.title,
+      duration: packageData.duration,
+      price: packageData.price,
+      originalPrice: packageData.originalPrice || null,
+      description: packageData.description,
+      image: packageData.image,
+      features: packageData.features,
+      isPopular: packageData.isPopular !== undefined ? packageData.isPopular : false,
+      whatsappLink: packageData.whatsappLink,
+      sortOrder: packageData.sortOrder !== undefined ? packageData.sortOrder : 0,
+      isActive: packageData.isActive !== undefined ? packageData.isActive : true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -288,7 +325,14 @@ export class MemStorage implements IStorage {
   async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
     const newTestimonial: Testimonial = {
       id: `testimonial-${Date.now()}`,
-      ...testimonial,
+      name: testimonial.name,
+      platform: testimonial.platform,
+      rating: testimonial.rating !== undefined ? testimonial.rating : 5,
+      review: testimonial.review,
+      userImage: testimonial.userImage,
+      reviewDate: testimonial.reviewDate,
+      sortOrder: testimonial.sortOrder !== undefined ? testimonial.sortOrder : 0,
+      isActive: testimonial.isActive !== undefined ? testimonial.isActive : true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -322,7 +366,13 @@ export class MemStorage implements IStorage {
   async createGalleryImage(image: InsertGalleryImage): Promise<GalleryImage> {
     const newImage: GalleryImage = {
       id: `gallery-${Date.now()}`,
-      ...image,
+      title: image.title,
+      description: image.description || null,
+      imageUrl: image.imageUrl,
+      altText: image.altText,
+      category: image.category || null,
+      sortOrder: image.sortOrder !== undefined ? image.sortOrder : 0,
+      isActive: image.isActive !== undefined ? image.isActive : true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -354,12 +404,23 @@ export class MemStorage implements IStorage {
   }
 
   async updateContactInfo(info: InsertContactInfo): Promise<ContactInfo> {
-    this.mockContactInfo = {
+    const updatedInfo: ContactInfo = {
       id: this.mockContactInfo?.id || "contact-1",
-      ...info,
+      businessName: info.businessName || "Heaven of Munroe",
+      phone: info.phone || "+91 96338 36839",
+      email: info.email || "heavenofmunroe@gmail.com",
+      address: info.address || "Munroe Island, Kollam District, Kerala, India",
+      whatsappNumber: info.whatsappNumber || "919633836839",
+      facebook: info.facebook || null,
+      instagram: info.instagram || null,
+      googleMaps: info.googleMaps || null,
+      description: info.description || "Get in touch with us for bookings, inquiries, or any questions about our services.",
+      businessHours: info.businessHours || "Available 24/7 for bookings and inquiries",
+      isActive: info.isActive !== undefined ? info.isActive : true,
       updatedAt: new Date()
     };
-    return this.mockContactInfo;
+    this.mockContactInfo = updatedInfo;
+    return updatedInfo;
   }
 
   async getContentSection(sectionKey: string): Promise<ContentSection | null> {
@@ -370,7 +431,10 @@ export class MemStorage implements IStorage {
     const section: ContentSection = {
       id: `section-${Date.now()}`,
       sectionKey,
-      ...content,
+      title: content.title || null,
+      content: content.content,
+      imageUrl: content.imageUrl || null,
+      isActive: content.isActive !== undefined ? content.isActive : true,
       updatedAt: new Date()
     };
     this.mockContentSections.set(sectionKey, section);
@@ -392,6 +456,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [message] = await db
       .insert(contactMessages)
       .values(insertMessage)
@@ -400,15 +467,24 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getBookingInquiries(): Promise<BookingInquiry[]> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     return await db.select().from(bookingInquiries).orderBy(desc(bookingInquiries.createdAt));
   }
 
   async getContactMessages(): Promise<ContactMessage[]> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     return await db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt));
   }
 
   // Hero Content
   async getHeroContent(): Promise<HeroContent | null> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [content] = await db.select().from(heroContent).where(eq(heroContent.isActive, true)).limit(1);
     return content || null;
   }
@@ -416,6 +492,10 @@ export class DatabaseStorage implements IStorage {
   async updateHeroContent(content: InsertHeroContent): Promise<HeroContent> {
     // First, get existing record
     const existing = await this.getHeroContent();
+    
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     
     if (existing) {
       // Update existing
@@ -437,12 +517,19 @@ export class DatabaseStorage implements IStorage {
 
   // About Content
   async getAboutContent(): Promise<AboutContent | null> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [content] = await db.select().from(aboutContent).where(eq(aboutContent.isActive, true)).limit(1);
     return content || null;
   }
 
   async updateAboutContent(content: InsertAboutContent): Promise<AboutContent> {
     const existing = await this.getAboutContent();
+    
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     
     if (existing) {
       const [updated] = await db
@@ -462,6 +549,9 @@ export class DatabaseStorage implements IStorage {
 
   // Boating Packages
   async getBoatingPackages(): Promise<BoatingPackage[]> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     return await db
       .select()
       .from(boatingPackages)
@@ -470,6 +560,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createBoatingPackage(packageData: InsertBoatingPackage): Promise<BoatingPackage> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [newPackage] = await db
       .insert(boatingPackages)
       .values(packageData)
@@ -478,6 +571,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateBoatingPackage(id: string, packageData: Partial<InsertBoatingPackage>): Promise<BoatingPackage> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [updated] = await db
       .update(boatingPackages)
       .set({ ...packageData, updatedAt: new Date() })
@@ -487,6 +583,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteBoatingPackage(id: string): Promise<void> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     await db
       .update(boatingPackages)
       .set({ isActive: false, updatedAt: new Date() })
@@ -495,6 +594,9 @@ export class DatabaseStorage implements IStorage {
 
   // Testimonials
   async getTestimonials(): Promise<Testimonial[]> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     return await db
       .select()
       .from(testimonials)
@@ -503,6 +605,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [newTestimonial] = await db
       .insert(testimonials)
       .values(testimonial)
@@ -511,6 +616,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateTestimonial(id: string, testimonial: Partial<InsertTestimonial>): Promise<Testimonial> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [updated] = await db
       .update(testimonials)
       .set({ ...testimonial, updatedAt: new Date() })
@@ -520,6 +628,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteTestimonial(id: string): Promise<void> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     await db
       .update(testimonials)
       .set({ isActive: false, updatedAt: new Date() })
@@ -528,6 +639,9 @@ export class DatabaseStorage implements IStorage {
 
   // Gallery Images
   async getGalleryImages(): Promise<GalleryImage[]> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     return await db
       .select()
       .from(galleryImages)
@@ -536,6 +650,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createGalleryImage(image: InsertGalleryImage): Promise<GalleryImage> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [newImage] = await db
       .insert(galleryImages)
       .values(image)
@@ -544,6 +661,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateGalleryImage(id: string, image: Partial<InsertGalleryImage>): Promise<GalleryImage> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [updated] = await db
       .update(galleryImages)
       .set({ ...image, updatedAt: new Date() })
@@ -553,6 +673,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteGalleryImage(id: string): Promise<void> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     await db
       .update(galleryImages)
       .set({ isActive: false, updatedAt: new Date() })
@@ -561,12 +684,19 @@ export class DatabaseStorage implements IStorage {
 
   // Contact Info
   async getContactInfo(): Promise<ContactInfo | null> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [info] = await db.select().from(contactInfo).where(eq(contactInfo.isActive, true)).limit(1);
     return info || null;
   }
 
   async updateContactInfo(info: InsertContactInfo): Promise<ContactInfo> {
     const existing = await this.getContactInfo();
+    
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     
     if (existing) {
       const [updated] = await db
@@ -586,6 +716,9 @@ export class DatabaseStorage implements IStorage {
 
   // Content Sections
   async getContentSection(sectionKey: string): Promise<ContentSection | null> {
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     const [section] = await db
       .select()
       .from(contentSections)
@@ -596,6 +729,10 @@ export class DatabaseStorage implements IStorage {
 
   async updateContentSection(sectionKey: string, content: InsertContentSection): Promise<ContentSection> {
     const existing = await this.getContentSection(sectionKey);
+    
+    if (!db) {
+      throw new Error('Database not available. Please check your database configuration.');
+    }
     
     if (existing) {
       const [updated] = await db
@@ -629,9 +766,15 @@ class InMemoryStorage implements IStorage {
   async createBookingInquiry(inquiry: InsertBookingInquiry): Promise<BookingInquiry> {
     const newInquiry: BookingInquiry = {
       id: Math.random().toString(36).substr(2, 9),
-      ...inquiry,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      fullName: inquiry.fullName,
+      email: inquiry.email,
+      phone: inquiry.phone,
+      numberOfGuests: inquiry.numberOfGuests,
+      checkInDate: inquiry.checkInDate || null,
+      checkOutDate: inquiry.checkOutDate || null,
+      experiences: inquiry.experiences || null,
+      specialRequests: inquiry.specialRequests || null,
+      createdAt: new Date()
     };
     this.bookingInquiries.push(newInquiry);
     return newInquiry;
@@ -640,9 +783,10 @@ class InMemoryStorage implements IStorage {
   async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
     const newMessage: ContactMessage = {
       id: Math.random().toString(36).substr(2, 9),
-      ...message,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      name: message.name,
+      email: message.email,
+      message: message.message,
+      createdAt: new Date()
     };
     this.contactMessages.push(newMessage);
     return newMessage;
@@ -663,9 +807,14 @@ class InMemoryStorage implements IStorage {
   async updateHeroContent(content: InsertHeroContent): Promise<HeroContent> {
     this.heroContentData = {
       id: this.heroContentData?.id || Math.random().toString(36).substr(2, 9),
-      ...content,
-      isActive: true,
-      createdAt: this.heroContentData?.createdAt || new Date(),
+      title: content.title || "Heaven of Munroe",
+      subtitle: content.subtitle || "Room Stay & Food Boating Service",
+      description: content.description || "Experience Authentic Kerala Backwaters",
+      backgroundImage: content.backgroundImage || "/images/backwater-boat-silhouette.jpg",
+      primaryButtonText: content.primaryButtonText || "Discover Paradise",
+      secondaryButtonText: content.secondaryButtonText || "Book Your Journey",
+      scrollHintText: content.scrollHintText || "✨ Scroll down to explore our services",
+      isActive: content.isActive !== undefined ? content.isActive : true,
       updatedAt: new Date()
     };
     return this.heroContentData;
@@ -678,9 +827,17 @@ class InMemoryStorage implements IStorage {
   async updateAboutContent(content: InsertAboutContent): Promise<AboutContent> {
     this.aboutContentData = {
       id: this.aboutContentData?.id || Math.random().toString(36).substr(2, 9),
-      ...content,
-      isActive: true,
-      createdAt: this.aboutContentData?.createdAt || new Date(),
+      title: content.title || "Meet Evan - Your Local Host",
+      hostName: content.hostName || "Evan",
+      hostImage: content.hostImage || "/images/1 (15).jpg",
+      introText: content.introText || "Born and raised on the pristine waters of Munroe Island",
+      description1: content.description1 || "His deep connection with the local ecosystem",
+      description2: content.description2 || "When you book with Heaven of Munroe",
+      expandedText1: content.expandedText1 || null,
+      expandedText2: content.expandedText2 || null,
+      languages: content.languages || "English, Hindi, Malayalam",
+      certifications: content.certifications || "Tourism Board Approved",
+      isActive: content.isActive !== undefined ? content.isActive : true,
       updatedAt: new Date()
     };
     return this.aboutContentData;
@@ -693,7 +850,18 @@ class InMemoryStorage implements IStorage {
   async createBoatingPackage(packageData: InsertBoatingPackage): Promise<BoatingPackage> {
     const newPackage: BoatingPackage = {
       id: Math.random().toString(36).substr(2, 9),
-      ...packageData,
+      packageId: packageData.packageId,
+      title: packageData.title,
+      duration: packageData.duration,
+      price: packageData.price,
+      originalPrice: packageData.originalPrice || null,
+      description: packageData.description,
+      image: packageData.image,
+      features: packageData.features,
+      isPopular: packageData.isPopular !== undefined ? packageData.isPopular : false,
+      whatsappLink: packageData.whatsappLink,
+      sortOrder: packageData.sortOrder !== undefined ? packageData.sortOrder : 0,
+      isActive: packageData.isActive !== undefined ? packageData.isActive : true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -726,7 +894,14 @@ class InMemoryStorage implements IStorage {
   async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
     const newTestimonial: Testimonial = {
       id: Math.random().toString(36).substr(2, 9),
-      ...testimonial,
+      name: testimonial.name,
+      platform: testimonial.platform,
+      rating: testimonial.rating !== undefined ? testimonial.rating : 5,
+      review: testimonial.review,
+      userImage: testimonial.userImage,
+      reviewDate: testimonial.reviewDate,
+      sortOrder: testimonial.sortOrder !== undefined ? testimonial.sortOrder : 0,
+      isActive: testimonial.isActive !== undefined ? testimonial.isActive : true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -759,7 +934,13 @@ class InMemoryStorage implements IStorage {
   async createGalleryImage(image: InsertGalleryImage): Promise<GalleryImage> {
     const newImage: GalleryImage = {
       id: Math.random().toString(36).substr(2, 9),
-      ...image,
+      title: image.title,
+      description: image.description || null,
+      imageUrl: image.imageUrl,
+      altText: image.altText,
+      category: image.category || null,
+      sortOrder: image.sortOrder !== undefined ? image.sortOrder : 0,
+      isActive: image.isActive !== undefined ? image.isActive : true,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -792,8 +973,17 @@ class InMemoryStorage implements IStorage {
   async updateContactInfo(info: InsertContactInfo): Promise<ContactInfo> {
     this.contactInfoData = {
       id: this.contactInfoData?.id || Math.random().toString(36).substr(2, 9),
-      ...info,
-      createdAt: this.contactInfoData?.createdAt || new Date(),
+      businessName: info.businessName || "Heaven of Munroe",
+      phone: info.phone || "+91 96338 36839",
+      email: info.email || "heavenofmunroe@gmail.com",
+      address: info.address || "Munroe Island, Kollam District, Kerala, India",
+      whatsappNumber: info.whatsappNumber || "919633836839",
+      facebook: info.facebook || null,
+      instagram: info.instagram || null,
+      googleMaps: info.googleMaps || null,
+      description: info.description || "Get in touch with us for bookings, inquiries, or any questions about our services.",
+      businessHours: info.businessHours || "Available 24/7 for bookings and inquiries",
+      isActive: info.isActive !== undefined ? info.isActive : true,
       updatedAt: new Date()
     };
     return this.contactInfoData;
@@ -808,8 +998,10 @@ class InMemoryStorage implements IStorage {
     const section: ContentSection = {
       id: existing?.id || Math.random().toString(36).substr(2, 9),
       sectionKey,
-      ...content,
-      createdAt: existing?.createdAt || new Date(),
+      title: content.title || null,
+      content: content.content,
+      imageUrl: content.imageUrl || null,
+      isActive: content.isActive !== undefined ? content.isActive : true,
       updatedAt: new Date()
     };
     this.contentSectionsData.set(sectionKey, section);
