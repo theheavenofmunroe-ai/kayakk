@@ -12,7 +12,7 @@ import {
   boatingPackages, testimonials, galleryImages, contactInfo, contentSections
 } from "@shared/schema";
 // Database imports - conditionally available based on DATABASE_URL
-import { db } from "./db";
+import { db, withRetry } from "./db";
 import { eq, desc } from "drizzle-orm";
 
 export interface IStorage {
@@ -448,11 +448,13 @@ export class DatabaseStorage implements IStorage {
     if (!db) {
       throw new Error('Database not available. Please check your database configuration.');
     }
-    const [inquiry] = await db
-      .insert(bookingInquiries)
-      .values(insertInquiry)
-      .returning();
-    return inquiry;
+    return await withRetry(async () => {
+      const [inquiry] = await db
+        .insert(bookingInquiries)
+        .values(insertInquiry)
+        .returning();
+      return inquiry;
+    });
   }
 
   async createContactMessage(insertMessage: InsertContactMessage): Promise<ContactMessage> {
@@ -470,7 +472,9 @@ export class DatabaseStorage implements IStorage {
     if (!db) {
       throw new Error('Database not available. Please check your database configuration.');
     }
-    return await db.select().from(bookingInquiries).orderBy(desc(bookingInquiries.createdAt));
+    return await withRetry(async () => {
+      return await db.select().from(bookingInquiries).orderBy(desc(bookingInquiries.createdAt));
+    });
   }
 
   async getContactMessages(): Promise<ContactMessage[]> {
@@ -485,8 +489,10 @@ export class DatabaseStorage implements IStorage {
     if (!db) {
       throw new Error('Database not available. Please check your database configuration.');
     }
-    const [content] = await db.select().from(heroContent).where(eq(heroContent.isActive, true)).limit(1);
-    return content || null;
+    return await withRetry(async () => {
+      const [content] = await db.select().from(heroContent).where(eq(heroContent.isActive, true)).limit(1);
+      return content || null;
+    });
   }
 
   async updateHeroContent(content: InsertHeroContent): Promise<HeroContent> {
@@ -719,12 +725,14 @@ export class DatabaseStorage implements IStorage {
     if (!db) {
       throw new Error('Database not available. Please check your database configuration.');
     }
-    const [section] = await db
-      .select()
-      .from(contentSections)
-      .where(eq(contentSections.sectionKey, sectionKey))
-      .limit(1);
-    return section || null;
+    return await withRetry(async () => {
+      const [section] = await db
+        .select()
+        .from(contentSections)
+        .where(eq(contentSections.sectionKey, sectionKey))
+        .limit(1);
+      return section || null;
+    });
   }
 
   async updateContentSection(sectionKey: string, content: InsertContentSection): Promise<ContentSection> {
@@ -734,20 +742,22 @@ export class DatabaseStorage implements IStorage {
       throw new Error('Database not available. Please check your database configuration.');
     }
     
-    if (existing) {
-      const [updated] = await db
-        .update(contentSections)
-        .set({ ...content, updatedAt: new Date() })
-        .where(eq(contentSections.id, existing.id))
-        .returning();
-      return updated;
-    } else {
-      const [newSection] = await db
-        .insert(contentSections)
-        .values({ ...content, sectionKey })
-        .returning();
-      return newSection;
-    }
+    return await withRetry(async () => {
+      if (existing) {
+        const [updated] = await db
+          .update(contentSections)
+          .set({ ...content, updatedAt: new Date() })
+          .where(eq(contentSections.id, existing.id))
+          .returning();
+        return updated;
+      } else {
+        const [newSection] = await db
+          .insert(contentSections)
+          .values({ ...content, sectionKey })
+          .returning();
+        return newSection;
+      }
+    });
   }
 }
 
