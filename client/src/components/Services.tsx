@@ -7,53 +7,16 @@ export default function Services() {
     setLocation(`/inquiry?package=${serviceId}`);
   };
 
-  const services = [
-    {
-      id: "canal-boating",
-      title: "Canal Boating Adventure",
-      description: "Experience the enchanting network of narrow canals and waterways of Munroe Island. Navigate through pristine mangrove forests, discover hidden lagoons, and witness diverse bird species in their natural habitat. Our traditional country boats provide an authentic Kerala backwater experience with knowledgeable local guides sharing fascinating stories about the region's rich history and culture. Perfect for all ages and skill levels - a peaceful journey through nature's paradise.",
-      price: "₹600/hour",
-      icon: "fas fa-water",
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Canal Boating Adventure service",
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "mini-houseboat",
-      title: "Mini House Boat (Shikkar Boat)",
-      description: "Traditional Kerala boat experience with authentic architecture and stunning sunset views.",
-      price: "₹1,200/day",
-      icon: "fas fa-ship",
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Mini House Boat service",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "homestay-rooms",
-      title: "Home Stay Rooms",
-      description: "Experience authentic Kerala hospitality in our traditional homes with modern amenities and local cuisine.",
-      price: "₹1800/night",
-      icon: "fas fa-home",
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Home Stay Rooms",
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "lake-foods",
-      title: "Lake Foods",
-      description: "Authentic Kerala cuisine with fresh seafood and traditional recipes. Home-cooked meals with local ingredients.",
-      price: "₹600/meal",
-      icon: "fas fa-utensils",
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Lake Foods service",
-      image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "kayaking",
-      title: "Kayaking Adventure",
-      description: "Paddle through the serene backwaters of Munroe Island in single or double kayaks. Explore narrow waterways, mangrove tunnels, and hidden coves at your own pace. Perfect for adventure enthusiasts and nature lovers seeking an active water experience with stunning views of the Kerala countryside.",
-      price: "₹250/hour",
-      icon: "fas fa-swimmer",
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Kayaking Adventure service",
-      image: "/images/1 (15).jpg"
-    }
-  ];
+  // All services removed as requested
+  const services: Array<{
+    id: string;
+    title: string;
+    description: string;
+    price: string;
+    icon: string;
+    whatsapp: string;
+    image: string;
+  }> = [];
 
   return (
     <section id="services" className="py-16 bg-gradient-to-b from-blue-50 to-green-50">
