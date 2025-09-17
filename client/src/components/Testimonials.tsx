@@ -182,11 +182,11 @@ export default function Testimonials() {
 
         {/* Main Testimonial Display */}
         <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 card-3d morphing-shadow water-ripple">
+          <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 md:p-12 card-3d morphing-shadow water-ripple hover-lift transition-all duration-700 transform">
             <div className="text-center">
               {/* Star Rating */}
               <div className="flex justify-center space-x-1 mb-6">
-                {[...Array(testimonials[currentTestimonial].rating)].map((_, i) => (
+                {[...Array(testimonialsData[currentTestimonial]?.rating || 5)].map((_, i) => (
                   <i 
                     key={i} 
                     className="fas fa-star text-yellow-400 text-xl animate-scale-in cursor-glow" 
@@ -244,11 +244,11 @@ export default function Testimonials() {
 
         {/* Grid of All Testimonials (smaller cards) */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in-stagger">
-          {testimonials.map((testimonial, index) => (
+          {testimonialsData.map((testimonial, index) => (
             <div 
               key={testimonial.id}
-              className={`bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 cursor-pointer water-ripple morphing-shadow ${
-                index === currentTestimonial ? 'ring-2 ring-blue-400' : ''
+              className={`bg-white/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-700 transform hover-lift cursor-pointer water-ripple morphing-shadow hover:scale-105 ${
+                index === currentTestimonial ? 'ring-2 ring-blue-400 scale-105' : ''
               }`}
               onClick={() => handleTestimonialChange(index)}
               data-testid={`testimonial-card-${testimonial.id}`}
