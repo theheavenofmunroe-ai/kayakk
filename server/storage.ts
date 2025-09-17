@@ -449,7 +449,7 @@ export class DatabaseStorage implements IStorage {
       throw new Error('Database not available. Please check your database configuration.');
     }
     return await withRetry(async () => {
-      const [inquiry] = await db
+      const [inquiry] = await db!
         .insert(bookingInquiries)
         .values(insertInquiry)
         .returning();
@@ -473,7 +473,7 @@ export class DatabaseStorage implements IStorage {
       throw new Error('Database not available. Please check your database configuration.');
     }
     return await withRetry(async () => {
-      return await db.select().from(bookingInquiries).orderBy(desc(bookingInquiries.createdAt));
+      return await db!.select().from(bookingInquiries).orderBy(desc(bookingInquiries.createdAt));
     });
   }
 
@@ -490,7 +490,7 @@ export class DatabaseStorage implements IStorage {
       throw new Error('Database not available. Please check your database configuration.');
     }
     return await withRetry(async () => {
-      const [content] = await db.select().from(heroContent).where(eq(heroContent.isActive, true)).limit(1);
+      const [content] = await db!.select().from(heroContent).where(eq(heroContent.isActive, true)).limit(1);
       return content || null;
     });
   }
@@ -726,7 +726,7 @@ export class DatabaseStorage implements IStorage {
       throw new Error('Database not available. Please check your database configuration.');
     }
     return await withRetry(async () => {
-      const [section] = await db
+      const [section] = await db!
         .select()
         .from(contentSections)
         .where(eq(contentSections.sectionKey, sectionKey))
@@ -744,14 +744,14 @@ export class DatabaseStorage implements IStorage {
     
     return await withRetry(async () => {
       if (existing) {
-        const [updated] = await db
+        const [updated] = await db!
           .update(contentSections)
           .set({ ...content, updatedAt: new Date() })
           .where(eq(contentSections.id, existing.id))
           .returning();
         return updated;
       } else {
-        const [newSection] = await db
+        const [newSection] = await db!
           .insert(contentSections)
           .values({ ...content, sectionKey })
           .returning();
