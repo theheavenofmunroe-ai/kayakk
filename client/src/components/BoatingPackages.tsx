@@ -17,10 +17,133 @@ export default function BoatingPackages() {
     setLocation(`/inquiry?package=${packageId}`);
   };
 
-  // Use database packages or empty array as fallback
-  const packagesData = packages || [];
+  const staticPackages = [
+    {
+      id: "boat-tours",
+      packageId: "boat-tours",
+      title: "Traditional Boat Tours",
+      duration: "3 Hours",
+      price: "₹900",
+      originalPrice: "₹1200",
+      description: "Authentic Kerala boathouse experience through pristine backwaters with expert local guides",
+      features: [
+        "Traditional Kerala boathouse ride",
+        "Experienced local boat captain",
+        "Scenic backwater exploration", 
+        "Bird watching opportunities",
+        "Photography assistance",
+        "Traditional refreshments"
+      ],
+      image: "/images/boathouse.jpg",
+      isPopular: true,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Traditional Boat Tours package",
+      sortOrder: 1,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: "canal-boating",
+      packageId: "canal-boating",
+      title: "Canal Boating Adventure",
+      duration: "2 Hours",
+      price: "₹600",
+      originalPrice: "₹800",
+      description: "Navigate through narrow canals and hidden waterways discovering untouched natural beauty",
+      features: [
+        "Narrow canal exploration",
+        "Hidden waterway discovery",
+        "Traditional rowing boat",
+        "Wildlife spotting",
+        "Local village glimpses",
+        "Peaceful nature experience"
+      ],
+      image: "/images/canal.jpg",
+      isPopular: false,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Canal Boating Adventure package",
+      sortOrder: 2,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: "lake-foods",
+      packageId: "lake-foods",
+      title: "Lake Foods Experience",
+      duration: "4 Hours",
+      price: "₹1100",
+      originalPrice: "₹1400",
+      description: "Savor authentic Kerala cuisine freshly prepared on the lake with traditional cooking methods",
+      features: [
+        "Freshly prepared Kerala meals",
+        "Traditional cooking demonstration",
+        "Local spices and ingredients",
+        "Waterfront dining experience",
+        "Cultural food stories",
+        "Vegetarian and non-veg options"
+      ],
+      image: "/images/food.jpg",
+      isPopular: true,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Lake Foods Experience package",
+      sortOrder: 3,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: "kayaking-adventure",
+      packageId: "kayaking-adventure",
+      title: "Kayaking Adventure",
+      duration: "2.5 Hours",
+      price: "₹750",
+      originalPrice: "₹950",
+      description: "Paddle through serene waters at your own pace, perfect for adventure enthusiasts and nature lovers",
+      features: [
+        "Single or double kayaks available",
+        "Safety equipment provided",
+        "Basic paddling instruction",
+        "Guided route through safe waters",
+        "Rest stops at scenic points",
+        "Photography opportunities"
+      ],
+      image: "/images/kayak.jpg",
+      isPopular: false,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Kayaking Adventure package",
+      sortOrder: 4,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: "homestay-rooms",
+      packageId: "homestay-rooms",
+      title: "Homestay Rooms",
+      duration: "Per Night",
+      price: "₹1800",
+      originalPrice: "₹2200",
+      description: "Comfortable overnight stay in traditional Kerala homes with warm hospitality and authentic experiences",
+      features: [
+        "Clean, comfortable rooms",
+        "Traditional Kerala architecture",
+        "Home-cooked meals included",
+        "Cultural interaction with hosts",
+        "Peaceful lakeside location",
+        "Wi-Fi and basic amenities"
+      ],
+      image: "/images/stay.jpg",
+      isPopular: true,
+      whatsappLink: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Homestay Rooms package",
+      sortOrder: 5,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ];
 
-  // If loading or no packages, show appropriate state
+  // Always use the new local image packages as requested
+  const packagesData = staticPackages;
+
+  // If loading, show loading state
   if (isLoading) {
     return (
       <section id="packages" className="py-16 bg-gradient-to-b from-green-50 to-blue-50">
@@ -51,84 +174,6 @@ export default function BoatingPackages() {
     );
   }
 
-  const staticPackages = [
-    {
-      id: "sunrise-special",
-      title: "Sunrise Special",
-      duration: "2 Hours",
-      price: "₹800",
-      originalPrice: "₹1000",
-      description: "Experience the magical sunrise over Munroe Island backwaters with traditional breakfast",
-      features: [
-        "Early morning boat ride (5:30 AM - 7:30 AM)",
-        "Traditional Kerala breakfast on boat",
-        "Bird watching opportunities",
-        "Photography sessions",
-        "Local guide and stories"
-      ],
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      popular: true,
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Sunrise Special package"
-    },
-    {
-      id: "family-adventure",
-      title: "Family Adventure",
-      duration: "4 Hours",
-      price: "₹1200",
-      originalPrice: "₹1500",
-      description: "Perfect family experience with lunch, activities, and comfortable boat exploration",
-      features: [
-        "4-hour guided boat tour",
-        "Traditional Kerala lunch",
-        "Fishing experience for kids",
-        "Island hopping",
-        "Cultural village visit",
-        "Swimming opportunities"
-      ],
-      image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      popular: false,
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Family Adventure package"
-    },
-    {
-      id: "romantic-sunset",
-      title: "Romantic Sunset",
-      duration: "3 Hours",
-      price: "₹1500",
-      originalPrice: "₹1800",
-      description: "Intimate sunset cruise with dinner and beautiful views for couples",
-      features: [
-        "Private boat for couples",
-        "Sunset viewing (5 PM - 8 PM)",
-        "Candlelight dinner on boat",
-        "Complimentary flower decoration",
-        "Photography service",
-        "Live music on request"
-      ],
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      popular: false,
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Romantic Sunset package"
-    },
-    {
-      id: "full-day-explorer",
-      title: "Full Day Explorer",
-      duration: "8 Hours",
-      price: "₹2500",
-      originalPrice: "₹3000",
-      description: "Complete Munroe Island experience with multiple activities and meals",
-      features: [
-        "Full day guided tour (9 AM - 5 PM)",
-        "Breakfast, lunch, and evening snacks",
-        "Multiple island visits",
-        "Coir making demonstration",
-        "Traditional fishing experience",
-        "Homestay cultural visit",
-        "Kayaking session included"
-      ],
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      popular: true,
-      whatsapp: "https://api.whatsapp.com/send?phone=919633836839&text=Hi! I want to book Full Day Explorer package"
-    }
-  ];
 
   return (
     <section id="packages" className="py-16 bg-gradient-to-b from-green-50 to-blue-50">
@@ -164,7 +209,7 @@ export default function BoatingPackages() {
                 
                 <div className="relative overflow-hidden group">
                   <div 
-                    className="h-64 bg-cover bg-center transition-all duration-1000 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 filter brightness-100 contrast-100 saturate-100 group-hover:brightness-110 group-hover:contrast-125 group-hover:saturate-125"
+                    className="h-80 bg-cover bg-center transition-all duration-1000 ease-in-out transform group-hover:scale-125 group-hover:rotate-2 filter brightness-100 contrast-100 saturate-100 group-hover:brightness-110 group-hover:contrast-125 group-hover:saturate-125"
                     style={{ backgroundImage: `url(${pkg.image})` }}
                   ></div>
                   
@@ -244,7 +289,7 @@ export default function BoatingPackages() {
                       </button>
                       
                       <button 
-                        onClick={() => window.open(pkg.whatsappLink, '_blank')}
+                        onClick={() => window.open(pkg.whatsappLink, '_blank', 'noopener,noreferrer')}
                         className="flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-500 transform hover:scale-105 hover:shadow-lg hover:-translate-y-1"
                         data-testid={`button-whatsapp-${pkg.id}`}
                       >
@@ -268,7 +313,7 @@ export default function BoatingPackages() {
               We can create personalized experiences based on your preferences, group size, and special requirements.
             </p>
             <button 
-              onClick={() => window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I need a custom boating package", '_blank')}
+              onClick={() => window.open("https://api.whatsapp.com/send?phone=919633836839&text=Hi! I need a custom boating package", '_blank', 'noopener,noreferrer')}
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
               data-testid="button-custom-package"
             >
